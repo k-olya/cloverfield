@@ -9,4 +9,4 @@ export const rand = (a: number, b: number) => lerp(a, b, Math.random());
 // random integer
 export const irand = (x: number) => Math.floor(Math.random() * x);
 
-export const range = (x: number) => Array.from(Array(x).keys())
+export const range = (x: number) => Array.from(Array(x).keys());

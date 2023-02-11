@@ -13,8 +13,8 @@ export interface Cloverfield {
 
 // the game will continue playing upon reaching max score
 // but field size will not increase anymore
-export const MAX_SCORE = 38;
-export const WAIT_TICKS = 15 * 50;
+export const MAX_SCORE = 40;
+export const WAIT_TICKS = 15.3 * 50;
 export const TICK_T = 20;
 
 const initialState: Cloverfield = {
@@ -41,8 +41,16 @@ export const cloverfieldSlice = createSlice({
     reset: (state) => initialState,
     increment: (state) => {
       if (state.gameState !== "finished") {
-        state.w = clamp(state.w + 1, initialState.w, MAX_SCORE + initialState.w);
-        state.h = clamp(state.h + 1, initialState.h, MAX_SCORE + initialState.h);
+        state.w = clamp(
+          state.w + 1,
+          initialState.w,
+          MAX_SCORE + initialState.w
+        );
+        state.h = clamp(
+          state.h + 1,
+          initialState.h,
+          MAX_SCORE + initialState.h
+        );
         state.count++;
         state.ticks = WAIT_TICKS;
         state.gameState = "playing";
@@ -64,7 +72,7 @@ export const cloverfieldSlice = createSlice({
   },
 });
 
-export const { increment, reset, tick } = cloverfieldSlice.actions;
+export const { increment, reset, update, tick } = cloverfieldSlice.actions;
 
 export default cloverfieldSlice.reducer;
 

@@ -1,5 +1,5 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import cloverfield from '../features/cloverfield/slice';
+import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
+import cloverfield from "../features/cloverfield/slice";
 
 export const store = configureStore({
   reducer: {
