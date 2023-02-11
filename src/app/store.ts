@@ -1,9 +1,9 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
+import cloverfield from '../features/cloverfield/slice';
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    cloverfield,
   },
 });
 

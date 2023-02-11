@@ -1,6 +1,74 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState, AppThunk } from '../../app/store';
-import { fetchCount } from './counterAPI';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { clamp, irand } from "app/math";
+
+export interface Cloverfield {
+  w: number;
+  h: number;
+  x: number;
+  y: number;
+  count: number;
+  ticks: number;
+  gameState: "initial" | "playing" | "finished";
+}
+
+// the game will continue playing upon reaching max score
+// but field size will not increase anymore
+export const MAX_SCORE = 38;
+export const WAIT_TICKS = 15 * 50;
+export const TICK_T = 20;
+
+const initialState: Cloverfield = {
+  w: 2,
+  h: 2,
+  x: 0,
+  y: 0,
+  count: 0,
+  ticks: 0,
+  gameState: "initial",
+};
+
+export const cloverfieldSlice = createSlice({
+  name: "cloverfield",
+  initialState,
+  reducers: {
+    setDimensions: (
+      state,
+      { payload }: PayloadAction<Pick<Cloverfield, "w" | "h">>
+    ) => {
+      state.w = payload.w;
+      state.h = payload.h;
+    },
+    reset: (state) => initialState,
+    increment: (state) => {
+      if (state.gameState !== "finished") {
+        state.w = clamp(state.w + 1, initialState.w, MAX_SCORE + initialState.w);
+        state.h = clamp(state.h + 1, initialState.h, MAX_SCORE + initialState.h);
+        state.count++;
+        state.ticks = WAIT_TICKS;
+        state.gameState = "playing";
+
+        state.x = irand(state.w);
+        state.y = irand(state.h);
+      }
+    },
+    update: (state) => {
+      state.x = irand(state.w);
+      state.y = irand(state.h);
+    },
+    tick: (state) => {
+      if (state.gameState === "playing") {
+        state.ticks = clamp(state.ticks - 1, 0, WAIT_TICKS);
+        if (state.ticks === 0) state.gameState = "finished";
+      }
+    },
+  },
+});
+
+export const { increment, reset, tick } = cloverfieldSlice.actions;
+
+export default cloverfieldSlice.reducer;
+
+/*
 
 export interface CounterState {
   value: number;
@@ -26,7 +94,7 @@ export const incrementAsync = createAsyncThunk(
   }
 );
 
-export const counterSlice = createSlice({
+export const cloverfieldSlice = createSlice({
   name: 'counter',
   initialState,
   // The `reducers` field lets us define reducers and generate associated actions
@@ -63,22 +131,23 @@ export const counterSlice = createSlice({
   },
 });
 
-export const { increment, decrement, incrementByAmount } = counterSlice.actions;
+export const { increment, decrement, incrementByAmount } = cloverfieldSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
-export const selectCount = (state: RootState) => state.counter.value;
+export const selectClover = (state: RootState) => state.cloverfield.value;
 
 // We can also write thunks by hand, which may contain both sync and async logic.
 // Here's an example of conditionally dispatching actions based on current state.
 export const incrementIfOdd =
   (amount: number): AppThunk =>
   (dispatch, getState) => {
-    const currentValue = selectCount(getState());
+    const currentValue = selectClover(getState());
     if (currentValue % 2 === 1) {
       dispatch(incrementByAmount(amount));
     }
   };
 
-export default counterSlice.reducer;
+export default cloverfieldSlice.reducer;
+*/
