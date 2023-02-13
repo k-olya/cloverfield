@@ -8,7 +8,7 @@ import { Clover } from "./clover";
 import { Shamrock } from "./shamrock";
 
 export function Cloverfield() {
-  const { w, h, x, y, modifiers } = useSelector((x) => x.cloverfield);
+  const { w, h, x, y, gameState, modifiers } = useSelector((x) => x.cloverfield);
   const dispatch = useDispatch();
   const ref = useRef(null);
 
@@ -59,6 +59,7 @@ export function Cloverfield() {
         w={_w}
         h={_h}
         picture={modifiers.includes("mask") ? "mask" : "clover"}
+        showPortal={gameState === "finished"}
         onClick={() => dispatch(increment())}
       />
     </svg>

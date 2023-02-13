@@ -1,4 +1,5 @@
-import { FC, MouseEvent } from "react";
+import { FC, MouseEvent, useRef } from "react";
+import { CloverPortal } from "./clover-portal";
 
 interface Props {
   x: number;
@@ -6,11 +7,20 @@ interface Props {
   w: number;
   h: number;
   picture: "clover" | "mask";
+  showPortal?: boolean;
   onClick: (e: MouseEvent) => void;
 }
 
-export const Clover: FC<Props> = ({ x, y, w, h, picture, onClick }) => (
-  <image
+export const Clover: FC<Props> = ({ x, y, w, h, picture, showPortal, onClick }) => {
+  const ref = useRef<SVGImageElement>(null);
+  let bounds: DOMRect = new DOMRect();
+  if (ref.current) {
+    bounds = ref.current.getBoundingClientRect();
+  }
+
+  return (
+  <><image
+    ref={ref}
     transform-origin={`${x + w / 2} ${y + w / 2}`}
     className="hover:scale-110 active:scale-100 transition-transform"
     x={x}
@@ -20,4 +30,7 @@ export const Clover: FC<Props> = ({ x, y, w, h, picture, onClick }) => (
     href={picture === "mask" ? "emoji_u1f47a.svg" : "emoji_u1f340.svg"}
     onClick={onClick}
   />
+ {!!showPortal && <CloverPortal picture={picture} x={bounds.x} y={bounds.y} w={bounds.width} h={bounds.height} />}
+  </>
 );
+}
