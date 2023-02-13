@@ -25,7 +25,7 @@ const TimeText = () => {
 };
 
 export const Score = () => (
-  <div className="text-2xl flex justify-between items-center mt-2 mx-4 w-full">
+  <div className="text-2xl flex justify-between items-center mt-2 portrait:mb-2 mx-4 w-full">
     &nbsp;
     <ScoreText />
     <TimeText />

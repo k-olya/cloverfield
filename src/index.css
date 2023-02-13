@@ -2,13 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-*:focus {
+*, *:focus {
   outline: none;
-  tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: transparent;
   backface-visibility: hidden;
 }
 
-body {
+html, body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
