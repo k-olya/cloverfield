@@ -1,5 +1,6 @@
 import { FC, MouseEvent, useRef } from "react";
 import c from "classnames";
+import { isTouch } from "app/touch";
 import { CloverPortal } from "./clover-portal";
 
 interface Props {
@@ -24,7 +25,7 @@ export const Clover: FC<Props> = ({ x, y, w, h, picture, showPortal, reducedMoti
   <><image
     ref={ref}
     transform-origin={`${x + w / 2} ${y + w / 2}`}
-    className={c({"landscape:hover:scale-110 landscape:active:scale-100 transition-transform": !reducedMotion})}
+    className={c({"hover:scale-110 active:scale-100 transition-transform": !reducedMotion && !isTouch()})}
     x={x}
     y={y}
     width={w}
