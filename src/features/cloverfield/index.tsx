@@ -9,16 +9,17 @@ import { Shamrock } from "./shamrock";
 
 export function Cloverfield() {
   const { w, h, x, y, gameState, modifiers } = useSelector((x) => x.cloverfield);
+  const reducedMotion = modifiers.includes("speedrun") || modifiers.includes("reduced-motion")
   const dispatch = useDispatch();
   const ref = useRef(null);
 
   useEffect(() => {
-    if (ref.current && !modifiers.includes("speedrun") && !modifiers.includes("reduced-motion")) {
+    if (ref.current && !reducedMotion) {
       const sas = ref.current as unknown as SVGElement;
       sas.classList.add("bounce-in");
       setTimeout(() => sas.classList.remove("bounce-in"), 300);
     }
-  }, [w, h, x, y, modifiers]);
+  }, [w, h, x, y, modifiers, reducedMotion]);
 
   useEffect(() => {
     dispatch(reset());
@@ -60,6 +61,7 @@ export function Cloverfield() {
         h={_h}
         picture={modifiers.includes("mask") ? "mask" : "clover"}
         showPortal={gameState === "finished"}
+        reducedMotion={reducedMotion}
         onClick={() => dispatch(increment())}
       />
     </svg>

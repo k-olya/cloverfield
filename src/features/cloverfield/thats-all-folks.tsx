@@ -32,12 +32,12 @@ export const ThatsAllFolks = () => {
           }
         )}
       >
-        <div className="text-5xl">{speedrun && finished ? "Speedrun Finished!" :"Game Over!"}</div>
+        <div className={speedrun && finished ? "text-3xl" : "text-5xl"}>{speedrun && finished ? "Speedrun Finished!" :"Game Over!"}</div>
           <div className="text-2xl mt-4">
             You scored <span className="text-2xl">{showPoints}</span> point
             {showPoints !== 1 && "s"}
           </div>
-        {!speedrun && showPoints <= MAX_SCORE / 4 && !modifiers.includes("reduced-motion") && (
+        {!speedrun && showPoints < MAX_SCORE / 2.0 && !modifiers.includes("reduced-motion") && (
           <div className="text-2xl mt-4">
             Try{" "}
             <a
@@ -81,10 +81,6 @@ export const ThatsAllFolks = () => {
             </a>
           </div>
         )}
-        {speedrun && finished && awesome && (
-          <div className="text-2xl mt-4">
-            You're very good!
-          </div>)}
         {speedrun && finished && awesome && (
           <div className="text-2xl mt-4">
             Have fun with{" "}

@@ -1,4 +1,5 @@
 import { FC, MouseEvent, useRef } from "react";
+import c from "classnames";
 import { CloverPortal } from "./clover-portal";
 
 interface Props {
@@ -8,10 +9,11 @@ interface Props {
   h: number;
   picture: "clover" | "mask";
   showPortal?: boolean;
+  reducedMotion?: boolean;
   onClick: (e: MouseEvent) => void;
 }
 
-export const Clover: FC<Props> = ({ x, y, w, h, picture, showPortal, onClick }) => {
+export const Clover: FC<Props> = ({ x, y, w, h, picture, showPortal, reducedMotion, onClick }) => {
   const ref = useRef<SVGImageElement>(null);
   let bounds: DOMRect = new DOMRect();
   if (ref.current) {
@@ -22,7 +24,7 @@ export const Clover: FC<Props> = ({ x, y, w, h, picture, showPortal, onClick }) 
   <><image
     ref={ref}
     transform-origin={`${x + w / 2} ${y + w / 2}`}
-    className="hover:scale-110 active:scale-100 transition-transform"
+    className={c({"landscape:hover:scale-110 landscape:active:scale-100 transition-transform": !reducedMotion})}
     x={x}
     y={y}
     width={w}
