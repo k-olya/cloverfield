@@ -1,6 +1,6 @@
 import { useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "app/hooks";
-import { increment, update } from "./slice";
+import { increment, reset } from "./slice";
 
 import { Gradient } from "./gradient";
 import { TicksConsumer } from "./ticks-consumer";
@@ -8,20 +8,20 @@ import { Clover } from "./clover";
 import { Shamrock } from "./shamrock";
 
 export function Cloverfield() {
-  const { w, h, x, y } = useSelector((x) => x.cloverfield);
+  const { w, h, x, y, modifiers } = useSelector((x) => x.cloverfield);
   const dispatch = useDispatch();
   const ref = useRef(null);
 
   useEffect(() => {
-    if (ref.current) {
+    if (ref.current && !modifiers.includes("speedrun")) {
       const sas = ref.current as unknown as SVGElement;
       sas.classList.add("bounce-in");
       setTimeout(() => sas.classList.remove("bounce-in"), 300);
     }
-  }, [w, h, x, y]);
+  }, [w, h, x, y, modifiers]);
 
   useEffect(() => {
-    dispatch(update());
+    dispatch(reset());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -58,6 +58,7 @@ export function Cloverfield() {
         y={_y}
         w={_w}
         h={_h}
+        picture={modifiers.includes("mask") ? "mask" : "clover"}
         onClick={() => dispatch(increment())}
       />
     </svg>

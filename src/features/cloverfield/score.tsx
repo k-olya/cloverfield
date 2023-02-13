@@ -1,12 +1,34 @@
-import { useSelector } from "../../app/hooks";
+import { useSelector } from "app/hooks";
+import { MSCounter } from "./ms-counter";
+import { MAX_SCORE } from "./slice";
 
-export const Score = () => {
-  const { count } = useSelector((x) => x.cloverfield);
+const ScoreText = () => {
+  const { count, gameState, modifiers } = useSelector((x) => x.cloverfield);
+  if (gameState === "finished") return null;
   return count ? (
-    <div className="text-xl mt-2 mx-4">
-      Score: <span className="text-2xl">{count}</span>
-    </div>
+    <span className="text-xl">
+      Score:{" "}
+      <span className="text-2xl">
+        {count}
+        {modifiers.includes("speedrun") ? `/${MAX_SCORE + 1}` : ""}
+      </span>
+    </span>
   ) : (
-    <div className="text-xl mt-2 mx-4">Find 🍀</div>
+    <span className="text-xl">Find {modifiers.includes("mask") ? <span className="inline-block transform -scale-x-100">👺</span> : "🍀"}</span>
   );
 };
+
+const TimeText = () => {
+  const { start, finish, modifiers } = useSelector((x) => x.cloverfield);
+  if (!modifiers.includes("speedrun") || typeof start !== "number") return null;
+  return <MSCounter start={start} finish={finish} />;
+};
+
+export const Score = () => (
+  <div className="text-2xl flex justify-between items-center mt-2 mx-4 w-full">
+    &nbsp;
+    <ScoreText />
+    <TimeText />
+    &nbsp;
+  </div>
+);

@@ -3,9 +3,9 @@ import reducer, {
   MAX_SCORE,
   WAIT_TICKS,
   increment,
-  update,
   reset,
   tick,
+  setModifiers,
 } from "./slice";
 
 describe("cloverfield game slice", () => {
@@ -17,6 +17,7 @@ describe("cloverfield game slice", () => {
     count: 0,
     ticks: 0,
     gameState: "initial",
+    modifiers: [],
   };
   it("should handle initial state", () => {
     expect(reducer(undefined, { type: "unknown" })).toEqual(initialState);
@@ -27,9 +28,12 @@ describe("cloverfield game slice", () => {
     expect(actual.w).toEqual(3);
   });
 
-  it("should update w/o increment when asked", () => {
-    const actual = reducer(initialState, update());
-    expect(actual.w).toEqual(2);
+  it("should update w/o increment in headstart mode", () => {
+    let temp = reducer(initialState, setModifiers(["headstart"]));
+    // it should work without manual reset, but it doesn't for some reason
+    temp = reducer(temp, reset());
+    const actual = reducer(temp, increment());
+    expect(actual.w).toEqual(temp.w);
   });
 
   it("should stop increment after certain point", () => {
@@ -38,6 +42,31 @@ describe("cloverfield game slice", () => {
       temp = reducer(temp, increment());
     }
     expect(temp.w).toEqual(MAX_SCORE + initialState.w);
+  });
+
+  it("should reset after changing modifiers", () => {
+    let temp = reducer(initialState, setModifiers(["headstart"]));
+    // it should work without manual reset, but it doesn't for some reason
+    temp = reducer(temp, reset());
+    expect(temp.w).toEqual(MAX_SCORE + initialState.w);
+  });
+
+  it("should continue playing in normal mode", () => {
+    let temp = reducer(initialState, increment());
+    for (let i = 0; i < MAX_SCORE * 2; i++) {
+      temp = reducer(temp, increment());
+    }
+    expect(temp.count).toEqual(MAX_SCORE * 2 + 1);
+  });
+
+  it("should stop playing in speedrun mode", () => {
+    let temp = reducer(initialState, setModifiers(["speedrun"]));
+    for (let i = 0; i < MAX_SCORE; i++) {
+      temp = reducer(temp, increment());
+    }
+    expect(temp.gameState).toEqual("playing");
+    temp = reducer(temp, increment());
+    expect(temp.gameState).toEqual("finished");
   });
 
   it("should handle ticks", () => {

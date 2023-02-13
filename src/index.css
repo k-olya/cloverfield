@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+*:focus {
+  outline: none;
+  tap-highlight-color: transparent;
+  backface-visibility: hidden;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -65,4 +71,16 @@ code {
   animation-name: bounceOutOpacity;
   animation-duration: 0.25s;
   animation-fill-mode: forwards;
+}
+
+@media (prefers-reduced-motion) {
+  .bounce-in {
+    animation: none;
+  }
+  .bounce-in-opacity {
+    animation: none;
+  }
+  .bounce-out-opacity {
+    animation: none;
+  }
 }

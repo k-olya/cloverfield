@@ -1,6 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { clamp, irand } from "app/math";
 
+export const ALL_MODIFIERS = ["speedrun", "mask", "headstart"] as const;
+export type Modifier = typeof ALL_MODIFIERS[number];
+export function isModifier(value: string): value is Modifier {
+  return ALL_MODIFIERS.includes(value as Modifier);
+}
+
 export interface Cloverfield {
   w: number;
   h: number;
@@ -9,6 +15,9 @@ export interface Cloverfield {
   count: number;
   ticks: number;
   gameState: "initial" | "playing" | "finished";
+  modifiers: Modifier[];
+  start?: number | null;
+  finish?: number | null;
 }
 
 // the game will continue playing upon reaching max score
@@ -25,6 +34,7 @@ const initialState: Cloverfield = {
   count: 0,
   ticks: 0,
   gameState: "initial",
+  modifiers: [],
 };
 
 export const cloverfieldSlice = createSlice({
@@ -38,41 +48,78 @@ export const cloverfieldSlice = createSlice({
       state.w = payload.w;
       state.h = payload.h;
     },
-    reset: (state) => initialState,
+    reset: (state) => {
+      const headstart = state.modifiers.includes("headstart") ? MAX_SCORE : 0;
+      const w = headstart + initialState.w;
+      const h = headstart + initialState.h;
+      return {
+        ...initialState,
+        modifiers: state.modifiers,
+        w,
+        h,
+        x: irand(w),
+        y: irand(h),
+      };
+    },
+    setModifiers: (state, { payload }: PayloadAction<Modifier[]>) => {
+      if (state.gameState !== "playing") {
+        state.modifiers = payload;
+      }
+      cloverfieldSlice.caseReducers.reset(state);
+    },
     increment: (state) => {
       if (state.gameState !== "finished") {
-        state.w = clamp(
-          state.w + 1,
-          initialState.w,
-          MAX_SCORE + initialState.w
-        );
-        state.h = clamp(
-          state.h + 1,
-          initialState.h,
-          MAX_SCORE + initialState.h
-        );
+        if (state.gameState === "initial") {
+          state.start = Date.now();
+        }
+        if (state.modifiers.includes("headstart")) {
+          state.w = MAX_SCORE + initialState.w;
+          state.h = MAX_SCORE + initialState.h;
+        } else {
+          state.w = clamp(
+            state.w + 1,
+            initialState.w,
+            MAX_SCORE + initialState.w
+          );
+          state.h = clamp(
+            state.h + 1,
+            initialState.h,
+            MAX_SCORE + initialState.h
+          );
+        }
         state.count++;
         state.ticks = WAIT_TICKS;
         state.gameState = "playing";
 
-        state.x = irand(state.w);
-        state.y = irand(state.h);
+        if (state.count === MAX_SCORE + 1) {
+          state.finish = Date.now();
+        }
+
+        if (
+          state.modifiers.includes("speedrun") &&
+          typeof state.finish === "number"
+        ) {
+          state.gameState = "finished";
+        } else {
+          state.x = irand(state.w);
+          state.y = irand(state.h);
+        }
       }
-    },
-    update: (state) => {
-      state.x = irand(state.w);
-      state.y = irand(state.h);
     },
     tick: (state) => {
       if (state.gameState === "playing") {
         state.ticks = clamp(state.ticks - 1, 0, WAIT_TICKS);
-        if (state.ticks === 0) state.gameState = "finished";
+        if (state.ticks === 0) {
+          state.gameState = "finished";
+          state.finish = Date.now();
+        }
       }
     },
   },
 });
 
-export const { increment, reset, update, tick } = cloverfieldSlice.actions;
+export const { increment, reset, tick, setModifiers } =
+  cloverfieldSlice.actions;
 
 export default cloverfieldSlice.reducer;
 

@@ -5,10 +5,11 @@ interface Props {
   y: number;
   w: number;
   h: number;
+  picture: "clover" | "mask";
   onClick: (e: MouseEvent) => void;
 }
 
-export const Clover: FC<Props> = ({ x, y, w, h, onClick }) => (
+export const Clover: FC<Props> = ({ x, y, w, h, picture, onClick }) => (
   <image
     transform-origin={`${x + w / 2} ${y + w / 2}`}
     className="hover:scale-110 active:scale-100 transition-transform"
@@ -16,7 +17,7 @@ export const Clover: FC<Props> = ({ x, y, w, h, onClick }) => (
     y={y}
     width={w}
     height={h}
-    href="emoji_u1f340.svg"
+    href={picture === "mask" ? "emoji_u1f47a.svg" : "emoji_u1f340.svg"}
     onClick={onClick}
   />
 );
