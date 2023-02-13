@@ -13,7 +13,7 @@ export function Cloverfield() {
   const ref = useRef(null);
 
   useEffect(() => {
-    if (ref.current && !modifiers.includes("speedrun")) {
+    if (ref.current && !modifiers.includes("speedrun") && !modifiers.includes("reduced-motion")) {
       const sas = ref.current as unknown as SVGElement;
       sas.classList.add("bounce-in");
       setTimeout(() => sas.classList.remove("bounce-in"), 300);

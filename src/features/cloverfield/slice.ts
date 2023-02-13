@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { clamp, irand } from "app/math";
 
-export const ALL_MODIFIERS = ["speedrun", "mask", "headstart"] as const;
+export const ALL_MODIFIERS = ["speedrun", "mask", "headstart", "reduced-motion"] as const;
 export type Modifier = typeof ALL_MODIFIERS[number];
 export function isModifier(value: string): value is Modifier {
   return ALL_MODIFIERS.includes(value as Modifier);

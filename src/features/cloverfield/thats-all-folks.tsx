@@ -37,6 +37,17 @@ export const ThatsAllFolks = () => {
             You scored <span className="text-2xl">{showPoints}</span> point
             {showPoints !== 1 && "s"}
           </div>
+        {!speedrun && !finished && (
+          <div className="text-2xl mt-4">
+            Try{" "}
+            <a
+              href="?modifiers=reduced-motion"
+              className="text-2xl underline text-white hover:text-white active:text-white visited:text-white"
+            >
+              reduced motion mode
+            </a>
+          </div>
+        )}
         {!speedrun && finished && (
           <div className="text-2xl mt-4">
             Try{" "}
