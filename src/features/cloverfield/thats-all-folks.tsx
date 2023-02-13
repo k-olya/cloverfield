@@ -5,7 +5,7 @@ import { reset, MAX_SCORE } from "./slice";
 
 import { BiReset } from "react-icons/bi";
 
-export const AWESOME_THRESHOLD = (144) * 1000
+export const AWESOME_THRESHOLD = 90 * 1000
 
 export const ThatsAllFolks = () => {
   const dispatch = useDispatch();
@@ -37,7 +37,7 @@ export const ThatsAllFolks = () => {
             You scored <span className="text-2xl">{showPoints}</span> point
             {showPoints !== 1 && "s"}
           </div>
-        {!speedrun && !finished && (
+        {!speedrun && showPoints <= MAX_SCORE / 4 && !modifiers.includes("reduced-motion") && (
           <div className="text-2xl mt-4">
             Try{" "}
             <a
