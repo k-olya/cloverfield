@@ -1,6 +1,7 @@
 # Find 🍀
 
 Find a four-leaf clover (🍀) in a field of shamrock (☘️).
+A live version is hosted at https://theradio.tk/games/clover
 
 ## Gameplay modifiers
 
