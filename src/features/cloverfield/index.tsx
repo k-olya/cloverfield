@@ -8,18 +8,20 @@ import { Clover } from "./clover";
 import { Shamrock } from "./shamrock";
 
 export function Cloverfield() {
-  const { w, h, x, y, gameState, modifiers } = useSelector((x) => x.cloverfield);
-  const reducedMotion = modifiers.includes("speedrun") || modifiers.includes("reduced-motion")
+  const { w, h, x, y, gameState, modifiers } = useSelector(x => x.cloverfield);
+  const reducedMotion =
+    modifiers.includes("speedrun") || modifiers.includes("reduced-motion");
   const dispatch = useDispatch();
   const ref = useRef(null);
 
-  useEffect(() => {
-    if (ref.current && !reducedMotion) {
-      const sas = ref.current as unknown as SVGElement;
-      sas.classList.add("bounce-in");
-      setTimeout(() => sas.classList.remove("bounce-in"), 300);
-    }
-  }, [w, h, x, y, modifiers, reducedMotion]);
+  // commented out bouncy animation because i don't like it anymore
+  // useEffect(() => {
+  //   if (ref.current && !reducedMotion) {
+  //     const sas = ref.current as unknown as SVGElement;
+  //     sas.classList.add("bounce-in");
+  //     setTimeout(() => sas.classList.remove("bounce-in"), 300);
+  //   }
+  // }, [w, h, x, y, modifiers, reducedMotion]);
 
   useEffect(() => {
     dispatch(reset());
