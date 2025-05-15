@@ -1,15 +1,15 @@
-import { Cloverfield } from "./features/cloverfield";
-import { Score } from "./features/cloverfield/score";
-import { ModeSwitcher } from "./features/cloverfield/mode-switcher";
-import { ThatsAllFolks } from "./features/cloverfield/thats-all-folks";
+import { Haystack } from "./features/game";
+import { Score } from "./features/game/score";
+import { ModeSwitcher } from "./features/game/mode-switcher";
+import { ThatsAllFolks } from "./features/game/thats-all-folks";
 
-const App = () => (
-  <div className="bg-gray-700 text-white w-full h-screen flex flex-col justify-center items-center cursor-pointer">
-    <ModeSwitcher />
-    <Score />
-    <Cloverfield />
-    <ThatsAllFolks />
-  </div>
-);
-
-export default App;
+export default function App() {
+  return (
+    <div className="w-screen h-screen flex flex-col items-center justify-center bg-gray-700 text-white">
+      <Score />
+      <Haystack />
+      <ModeSwitcher />
+      <ThatsAllFolks />
+    </div>
+  );
+}

@@ -1,11 +1,11 @@
-import { useSelector, useDispatch } from "app/hooks";
+import { useSelector, useDispatch } from "app/store";
 import { clamp } from "app/math";
 import { useInterval } from "app/use-interval";
 
 import { WAIT_TICKS, TICK_T, tick } from "./slice";
 
 export const TicksConsumer = () => {
-  const { ticks } = useSelector((s) => s.cloverfield);
+  const { ticks } = useSelector((s) => s.haystack);
   const dispatch = useDispatch();
   useInterval(() => {
     dispatch(tick());

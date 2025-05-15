@@ -1,14 +1,14 @@
 import { useRef, useEffect } from "react";
-import { useSelector, useDispatch } from "app/hooks";
+import { useSelector, useDispatch } from "app/store";
 import { increment, reset } from "./slice";
 
 import { Gradient } from "./gradient";
 import { TicksConsumer } from "./ticks-consumer";
-import { Clover } from "./clover";
-import { Shamrock } from "./shamrock";
+import { Needle } from "./needle";
+import { Hay } from "./hay";
 
-export function Cloverfield() {
-  const { w, h, x, y, gameState, modifiers } = useSelector(x => x.cloverfield);
+export function Haystack() {
+  const { w, h, x, y, gameState, modifiers } = useSelector(x => x.haystack);
   const reducedMotion =
     modifiers.includes("speedrun") || modifiers.includes("reduced-motion");
   const dispatch = useDispatch();
@@ -40,12 +40,12 @@ export function Cloverfield() {
       viewBox="-15 -3 286 276"
       className="landscape:h-full origin-top"
       role="img"
-      aria-label="cloverfield"
+      aria-label="haystack"
       ref={ref}
     >
       <defs>
         <Gradient id="gradient" />
-        <Shamrock w={_w} h={_h} x={_x} y={_y} />
+        <Hay w={_w} h={_h} x={_x} y={_y} />
       </defs>
       <TicksConsumer />
       <rect
@@ -53,15 +53,14 @@ export function Cloverfield() {
         y="0"
         width="256"
         height="256"
-        fill="url(#shamrock)"
-        mask="url(#shamrock_mask)"
+        fill="url(#hay)"
+        mask="url(#hay_mask)"
       />
-      <Clover
+      <Needle
         x={_x}
         y={_y}
         w={_w}
         h={_h}
-        picture={modifiers.includes("mask") ? "mask" : "clover"}
         showPortal={gameState === "finished"}
         reducedMotion={reducedMotion}
         onClick={() => dispatch(increment())}

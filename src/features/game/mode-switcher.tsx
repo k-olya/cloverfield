@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useDispatch } from "app/hooks";
+import { useDispatch } from "app/store";
 import { setModifiers, Modifier, isModifier } from "./slice";
 
 export const ModeSwitcher = () => {

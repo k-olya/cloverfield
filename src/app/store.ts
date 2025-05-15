@@ -1,9 +1,14 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-import cloverfield from "../features/cloverfield/slice";
+import {
+  TypedUseSelectorHook,
+  useDispatch as _useDispatch,
+  useSelector as _useSelector,
+} from "react-redux";
+import haystack from "../features/game/slice";
 
 export const store = configureStore({
   reducer: {
-    cloverfield,
+    haystack,
   },
 });
 
@@ -15,3 +20,7 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   unknown,
   Action<string>
 >;
+
+// Use throughout your app instead of plain `useDispatch` and `useSelector`
+export const useDispatch = () => _useDispatch<AppDispatch>();
+export const useSelector: TypedUseSelectorHook<RootState> = _useSelector;

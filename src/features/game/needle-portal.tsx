@@ -1,17 +1,19 @@
 import { FC, useState } from "react";
 import { createPortal } from "react-dom";
 import c from "classnames";
+import { useSelector } from "app/store";
 
 interface Props {
   x: number;
   y: number;
   w: number;
   h: number;
-  picture: "clover" | "mask";
 }
 
-export const CloverPortal: FC<Props> = ({ x, y, w, h, picture }) => {
+export const NeedlePortal: FC<Props> = ({ x, y, w, h }) => {
   const [hide, setHide] = useState(false);
+  const { activePair, emojiPairs } = useSelector(state => state.haystack);
+  
   return createPortal(
   <img
     alt="hint"
@@ -24,6 +26,6 @@ export const CloverPortal: FC<Props> = ({ x, y, w, h, picture }) => {
       height: h,
       filter: "drop-shadow(0px 0px 25px #ffffff)"
     }}
-    src={picture === "mask" ? "emoji_u1f47a.svg" : "emoji_u1f340.svg"}
+    src={emojiPairs[activePair].needle}
   />, window.document.body);
 }

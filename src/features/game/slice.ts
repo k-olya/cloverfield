@@ -7,7 +7,13 @@ export function isModifier(value: string): value is Modifier {
   return ALL_MODIFIERS.includes(value as Modifier);
 }
 
-export interface Cloverfield {
+export interface EmojiPair {
+  needle: string;
+  hay: string;
+  name: string;
+}
+
+export interface Haystack {
   w: number;
   h: number;
   x: number;
@@ -18,6 +24,8 @@ export interface Cloverfield {
   modifiers: Modifier[];
   start?: number | null;
   finish?: number | null;
+  activePair: number;
+  emojiPairs: EmojiPair[];
 }
 
 // the game will continue playing upon reaching max score
@@ -26,7 +34,20 @@ export const MAX_SCORE = 40;
 export const WAIT_TICKS = 15.3 * 50;
 export const TICK_T = 20;
 
-const initialState: Cloverfield = {
+const EMOJI_PAIRS: EmojiPair[] = [
+  {
+    needle: "emoji_u1f340.svg",
+    hay: "emoji_u2618.svg",
+    name: "clover and shamrock"
+  },
+  {
+    needle: "emoji_u1f47a.svg",
+    hay: "emoji_u2618.svg",
+    name: "mask and shamrock"
+  }
+];
+
+const initialState: Haystack = {
   w: 2,
   h: 2,
   x: 0,
@@ -35,15 +56,17 @@ const initialState: Cloverfield = {
   ticks: 0,
   gameState: "initial",
   modifiers: [],
+  activePair: 0,
+  emojiPairs: EMOJI_PAIRS,
 };
 
-export const cloverfieldSlice = createSlice({
-  name: "cloverfield",
+export const haystackSlice = createSlice({
+  name: "haystack",
   initialState,
   reducers: {
     setDimensions: (
       state,
-      { payload }: PayloadAction<Pick<Cloverfield, "w" | "h">>
+      { payload }: PayloadAction<Pick<Haystack, "w" | "h">>
     ) => {
       state.w = payload.w;
       state.h = payload.h;
@@ -65,7 +88,7 @@ export const cloverfieldSlice = createSlice({
       if (state.gameState !== "playing") {
         state.modifiers = payload;
       }
-      cloverfieldSlice.caseReducers.reset(state);
+      haystackSlice.caseReducers.reset(state);
     },
     increment: (state) => {
       if (state.gameState !== "finished") {
@@ -119,9 +142,9 @@ export const cloverfieldSlice = createSlice({
 });
 
 export const { increment, reset, tick, setModifiers } =
-  cloverfieldSlice.actions;
+  haystackSlice.actions;
 
-export default cloverfieldSlice.reducer;
+export default haystackSlice.reducer;
 
 /*
 

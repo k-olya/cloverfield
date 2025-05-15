@@ -1,21 +1,22 @@
 import { FC, MouseEvent, useRef } from "react";
 import c from "classnames";
 import { isTouch } from "app/touch";
-import { CloverPortal } from "./clover-portal";
+import { NeedlePortal } from "./needle-portal";
+import { useSelector } from "app/store";
 
 interface Props {
   x: number;
   y: number;
   w: number;
   h: number;
-  picture: "clover" | "mask";
   showPortal?: boolean;
   reducedMotion?: boolean;
   onClick: (e: MouseEvent) => void;
 }
 
-export const Clover: FC<Props> = ({ x, y, w, h, picture, showPortal, reducedMotion, onClick }) => {
+export const Needle: FC<Props> = ({ x, y, w, h, showPortal, reducedMotion, onClick }) => {
   const ref = useRef<SVGImageElement>(null);
+  const { activePair, emojiPairs } = useSelector(state => state.haystack);
   let bounds: DOMRect = new DOMRect();
   if (ref.current) {
     bounds = ref.current.getBoundingClientRect();
@@ -30,10 +31,10 @@ export const Clover: FC<Props> = ({ x, y, w, h, picture, showPortal, reducedMoti
     y={y}
     width={w}
     height={h}
-    href={picture === "mask" ? "emoji_u1f47a.svg" : "emoji_u1f340.svg"}
+    href={emojiPairs[activePair].needle}
     onClick={onClick}
   />
- {!!showPortal && <CloverPortal picture={picture} x={bounds.x} y={bounds.y} w={bounds.width} h={bounds.height} />}
+ {!!showPortal && <NeedlePortal x={bounds.x} y={bounds.y} w={bounds.width} h={bounds.height} />}
   </>
 );
 }

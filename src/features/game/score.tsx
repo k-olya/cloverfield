@@ -1,9 +1,9 @@
-import { useSelector } from "app/hooks";
+import { useSelector } from "app/store";
 import { MSCounter } from "./ms-counter";
 import { MAX_SCORE } from "./slice";
 
 const ScoreText = () => {
-  const { count, gameState, modifiers } = useSelector((x) => x.cloverfield);
+  const { count, gameState, modifiers } = useSelector((x) => x.haystack);
   if (gameState === "finished") return null;
   return count ? (
     <span className="text-xl">
@@ -19,7 +19,7 @@ const ScoreText = () => {
 };
 
 const TimeText = () => {
-  const { start, finish, modifiers } = useSelector((x) => x.cloverfield);
+  const { start, finish, modifiers } = useSelector((x) => x.haystack);
   if (!modifiers.includes("speedrun") || typeof start !== "number") return null;
   return <MSCounter start={start} finish={finish} />;
 };

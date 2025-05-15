@@ -1,5 +1,5 @@
 import reducer, {
-  Cloverfield,
+  Haystack,
   MAX_SCORE,
   WAIT_TICKS,
   increment,
@@ -8,17 +8,10 @@ import reducer, {
   setModifiers,
 } from "./slice";
 
-describe("cloverfield game slice", () => {
-  const initialState: Cloverfield = {
-    w: 2,
-    h: 2,
-    x: 0,
-    y: 0,
-    count: 0,
-    ticks: 0,
-    gameState: "initial",
-    modifiers: [],
-  };
+describe("haystack game slice", () => {
+  // Get initial state from reducer's default state
+  const initialState = reducer(undefined, { type: "unknown" });
+
   it("should handle initial state", () => {
     expect(reducer(undefined, { type: "unknown" })).toEqual(initialState);
   });

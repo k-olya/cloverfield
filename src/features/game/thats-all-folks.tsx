@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import c from "classnames";
-import { useSelector, useDispatch } from "app/hooks";
+import { useSelector, useDispatch } from "app/store";
 import { reset, MAX_SCORE } from "./slice";
 
 import { BiReset } from "react-icons/bi";
@@ -9,7 +9,7 @@ export const AWESOME_THRESHOLD = 90 * 1000
 
 export const ThatsAllFolks = () => {
   const dispatch = useDispatch();
-  const { gameState, count, modifiers, finish, start } = useSelector((s) => s.cloverfield);
+  const { gameState, count, modifiers, finish, start } = useSelector((s) => s.haystack);
   const [showPoints, setShowPoints] = useState<number | null>(null);
   useEffect(() => {
     if (gameState === "finished" && showPoints === null) setShowPoints(count);
