@@ -9,7 +9,7 @@ interface SettingsProps {
 export function Settings({ onClose }: SettingsProps) {
   const dispatch = useDispatch();
   const { modifiers } = useSelector((s) => s.haystack);
-  const [volume, setVolume] = useState(50);
+  const [volume, setVolume] = useState(100);
 
   const toggleReducedMotion = () => {
     const newModifiers = modifiers.includes("reduced-motion")
@@ -35,18 +35,27 @@ export function Settings({ onClose }: SettingsProps) {
           <span>Reduced Motion</span>
           <button
             onClick={toggleReducedMotion}
-            className={`px-4 py-2 rounded ${
+            className={`px-4 py-2 rounded flex items-center justify-center ${
               modifiers.includes("reduced-motion")
                 ? "bg-special-green text-white"
                 : "bg-gray-700 hover:bg-gray-600"
             }`}
           >
-            {modifiers.includes("reduced-motion") ? "On" : "Off"}
+            <img 
+              src={modifiers.includes("reduced-motion") ? "/emoji/emoji_u2714.svg" : "/emoji/emoji_u274c.svg"} 
+              alt={modifiers.includes("reduced-motion") ? "On" : "Off"}
+              className="w-5 h-5" 
+            />
           </button>
         </div>
 
         <div className="flex flex-col gap-2">
-          <span>Music Volume</span>
+          <div className="flex items-center gap-2">
+            <span>Music Volume</span>
+            <span className="text-sm text-gray-400">
+              {volume}%
+            </span>
+          </div>
           <input
             type="range"
             min="0"
@@ -55,9 +64,6 @@ export function Settings({ onClose }: SettingsProps) {
             onChange={(e) => setVolume(Number(e.target.value))}
             className="w-full"
           />
-          <div className="text-right text-sm text-gray-400">
-            {volume}%
-          </div>
         </div>
       </div>
     </div>

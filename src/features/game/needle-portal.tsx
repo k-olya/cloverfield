@@ -2,6 +2,7 @@ import { FC, useState } from "react";
 import { createPortal } from "react-dom";
 import c from "classnames";
 import { useSelector } from "app/store";
+import { getActivePair } from "./slice";
 
 interface Props {
   x: number;
@@ -12,7 +13,7 @@ interface Props {
 
 export const NeedlePortal: FC<Props> = ({ x, y, w, h }) => {
   const [hide, setHide] = useState(false);
-  const { activePair, emojiPairs } = useSelector(state => state.haystack);
+  const activePair = useSelector(state => getActivePair(state.haystack));
   
   return createPortal(
   <img
@@ -26,6 +27,6 @@ export const NeedlePortal: FC<Props> = ({ x, y, w, h }) => {
       height: h,
       filter: "drop-shadow(0px 0px 25px #ffffff)"
     }}
-    src={emojiPairs[activePair].needle}
+    src={activePair.needle}
   />, window.document.body);
 }

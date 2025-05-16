@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { clamp, irand } from "app/math";
+import { LEVELS } from "config/emoji-pairs";
 
 export const ALL_MODIFIERS = ["speedrun", "headstart", "reduced-motion"] as const;
 export type Modifier = typeof ALL_MODIFIERS[number];
@@ -8,11 +9,14 @@ export const isModifier = (x: string): x is Modifier =>
   ALL_MODIFIERS.includes(x as Modifier);
 
 export interface EmojiPair {
+  id: number;
   needle: string;
   hay: string;
   name: string;
   difficulty: number;
 }
+
+export type NamedLevelList = { name: string; levels: EmojiPair[]}[];
 
 export interface Haystack {
   w: number;
@@ -25,8 +29,8 @@ export interface Haystack {
   modifiers: Modifier[];
   start?: number | null;
   finish?: number | null;
-  activePair: number;
-  emojiPairs: EmojiPair[];
+  activePairId: number;
+  levels: NamedLevelList;
 }
 
 // the game will continue playing upon reaching max score
@@ -34,21 +38,6 @@ export interface Haystack {
 export const MAX_SCORE = 41;
 export const WAIT_TICKS = 15.3 * 50;
 export const TICK_T = 20;
-
-const EMOJI_PAIRS: EmojiPair[] = [
-  {
-    needle: "/emoji/emoji_u1f47a.svg",
-    hay: "/emoji/emoji_u2618.svg",
-    name: "goblin and shamrock",
-    difficulty: 0.1
-  },
-  {
-    needle: "/emoji/emoji_u1f340.svg",
-    hay: "/emoji/emoji_u2618.svg",
-    name: "clover and shamrock",
-    difficulty: 0.8
-  }
-];
 
 const initialState: Haystack = {
   w: 2,
@@ -59,8 +48,16 @@ const initialState: Haystack = {
   ticks: 0,
   gameState: "initial",
   modifiers: [],
-  activePair: 0,
-  emojiPairs: EMOJI_PAIRS,
+  activePairId: 1, // Default to first level in Classic set
+  levels: LEVELS,
+};
+
+export const getActivePair = (state: Haystack): EmojiPair => {
+  for (const levelSet of state.levels) {
+    const pair = levelSet.levels.find(level => level.id === state.activePairId);
+    if (pair) return pair;
+  }
+  return state.levels[0].levels[0]; // Fallback to first level if ID not found
 };
 
 export const haystackSlice = createSlice({
@@ -81,8 +78,8 @@ export const haystackSlice = createSlice({
       return {
         ...initialState,
         modifiers: state.modifiers,
-        activePair: state.activePair,
-        emojiPairs: state.emojiPairs,
+        activePairId: state.activePairId,
+        levels: state.levels,
         w,
         h,
         x: irand(w),
@@ -93,15 +90,15 @@ export const haystackSlice = createSlice({
       state.modifiers = payload;
       haystackSlice.caseReducers.reset(state);
     },
-    setActivePair: (state, { payload }: PayloadAction<number>) => {
-      state.activePair = payload;
+    setActivePairId: (state, { payload }: PayloadAction<number>) => {
+      state.activePairId = payload;
       haystackSlice.caseReducers.reset(state);
     },
     increment: (state) => {
       if (state.gameState !== "finished") {
         if (state.gameState === "initial") {
           state.start = Date.now();
-        state.count--;
+          state.count--;
         }
         if (state.modifiers.includes("headstart")) {
           state.w = MAX_SCORE + initialState.w;
@@ -149,7 +146,7 @@ export const haystackSlice = createSlice({
   },
 });
 
-export const { setDimensions, reset, setModifiers, setActivePair, increment, tick } = haystackSlice.actions;
+export const { setDimensions, reset, setModifiers, setActivePairId, increment, tick } = haystackSlice.actions;
 
 export default haystackSlice.reducer;
 

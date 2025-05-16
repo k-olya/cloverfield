@@ -3,6 +3,7 @@ import c from "classnames";
 import { isTouch } from "app/touch";
 import { NeedlePortal } from "./needle-portal";
 import { useSelector } from "app/store";
+import { getActivePair } from "./slice";
 
 interface Props {
   x: number;
@@ -16,7 +17,7 @@ interface Props {
 
 export const Needle: FC<Props> = ({ x, y, w, h, showPortal, reducedMotion, onClick }) => {
   const ref = useRef<SVGImageElement>(null);
-  const { activePair, emojiPairs } = useSelector(state => state.haystack);
+  const activePair = useSelector(state => getActivePair(state.haystack));
   let bounds: DOMRect = new DOMRect();
   if (ref.current) {
     bounds = ref.current.getBoundingClientRect();
@@ -31,7 +32,7 @@ export const Needle: FC<Props> = ({ x, y, w, h, showPortal, reducedMotion, onCli
     y={y}
     width={w}
     height={h}
-    href={emojiPairs[activePair].needle}
+    href={activePair.needle}
     onClick={onClick}
   />
  {!!showPortal && <NeedlePortal x={bounds.x} y={bounds.y} w={bounds.width} h={bounds.height} />}

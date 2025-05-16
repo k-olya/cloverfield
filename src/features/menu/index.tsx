@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "app/store";
-import { setModifiers, setActivePair, Modifier, increment } from "../game/slice";
+import { setModifiers, Modifier, increment } from "../game/slice";
 import { Settings } from "./settings";
 import { MenuBackground } from "./background";
+import { EmojiPairSelector } from "./emoji-pair-selector";
 
 export function Menu() {
   const dispatch = useDispatch();
-  const { emojiPairs, modifiers, activePair } = useSelector((s) => s.haystack);
+  const { modifiers } = useSelector((s) => s.haystack);
   const [showSettings, setShowSettings] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
 
   const toggleModifier = (modifier: Modifier) => {
     const newModifiers = modifiers.includes(modifier)
@@ -32,67 +34,61 @@ export function Menu() {
   return (
     <>
       <MenuBackground />
+      <div className="fixed top-4 right-4 flex gap-2">
+        <button
+          onClick={() => setIsMuted(!isMuted)}
+          className="w-10 h-10 flex items-center justify-center rounded bg-gray-800 hover:bg-gray-700"
+        >
+          <img 
+            src={isMuted ? "/emoji/emoji_u1f507.svg" : "/emoji/emoji_u1f3b5.svg"} 
+            alt={isMuted ? "Unmute" : "Mute"}
+            className="w-6 h-6"
+          />
+        </button>
+        <button
+          onClick={() => setShowSettings(true)}
+          className="w-10 h-10 flex items-center justify-center rounded bg-gray-800 hover:bg-gray-700"
+        >
+          <img 
+            src="/emoji/emoji_u2699.svg" 
+            alt="Settings"
+            className="w-6 h-6"
+          />
+        </button>
+      </div>
       <div className="flex flex-col bg-gray-800 rounded-lg shadow-lg max-w-md w-full mx-4 max-h-screen">
         <div className="p-6 pb-0">
           <h1 className="text-3xl font-bold text-center mb-4">Clover</h1>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-6 pt-4">
-          <div className="text-xl font-bold mb-2">Levels</div>
-          <div className="flex flex-col gap-2">
-            {emojiPairs.map((pair, index) => (
-              <button
-                key={pair.name}
-                onClick={() => dispatch(setActivePair(index))}
-                className={`px-4 py-2 rounded ${
-                  activePair === index
-                    ? "bg-special-green text-white"
-                    : "bg-gray-700 hover:bg-gray-600"
-                }`}
-              >
-                <div className="flex items-center gap-2">
-                  <img src={pair.needle} alt="" className="w-6 h-6" />
-                  <span>{pair.name}</span>
-                  <span className="text-sm opacity-50">
-                    (Difficulty: {Math.round(pair.difficulty * 100)}%)
-                  </span>
-                </div>
-              </button>
-            ))}
-          </div>
-        </div>
+        <EmojiPairSelector />
 
         <div className="border-t border-gray-700 bg-gray-800 p-6 rounded-b-lg">
-          <div className="text-xl font-bold mb-2">Game Modifiers</div>
-          <div className="flex flex-col gap-2">
+          <div className="text-base font-medium mb-2">Game Modifiers</div>
+          <div className="flex gap-2">
             <button
               onClick={() => toggleModifier("speedrun")}
-              className={`px-4 py-2 rounded ${
+              className={`flex-1 px-4 py-2 rounded flex items-center justify-center gap-2 ${
                 modifiers.includes("speedrun")
                   ? "bg-special-green text-white"
                   : "bg-gray-700 hover:bg-gray-600"
               }`}
             >
-              Speedrun Mode
+              <img src="/emoji/emoji_u26a1.svg" alt="" className="w-6 h-6" />
+              Speedrun
             </button>
             <button
               onClick={() => toggleModifier("headstart")}
-              className={`px-4 py-2 rounded ${
+              className={`flex-1 px-4 py-2 rounded flex items-center justify-center gap-2 ${
                 modifiers.includes("headstart")
                   ? "bg-special-green text-white"
                   : "bg-gray-700 hover:bg-gray-600"
               }`}
             >
-              Headstart Mode
+              <img src="/emoji/emoji_u1f680.svg" alt="" className="w-6 h-6" />
+              Headstart
             </button>
           </div>
-
-          <button
-            onClick={() => setShowSettings(true)}
-            className="mt-4 w-full px-4 py-2 rounded bg-gray-700 hover:bg-gray-600"
-          >
-            Settings
-          </button>
 
           <button
             onClick={startGame}

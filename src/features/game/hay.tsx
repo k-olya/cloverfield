@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { useSelector } from "app/store";
+import { getActivePair } from "./slice";
 
 interface Props {
   w: number;
@@ -9,7 +10,7 @@ interface Props {
 }
 
 export const Hay: FC<Props> = ({ w, h, x, y }) => {
-  const { activePair, emojiPairs } = useSelector(state => state.haystack);
+  const activePair = useSelector(state => getActivePair(state.haystack));
   
   return (
   <>
@@ -23,7 +24,7 @@ export const Hay: FC<Props> = ({ w, h, x, y }) => {
       width={`${Math.round(10000 / (256 / w)) * 0.01}%`}
       height={`${Math.round(10000 / (256 / h)) * 0.01}%`}
     >
-      <image x={0} y={0} width={128} height={128} href={emojiPairs[activePair].hay} />
+      <image x={0} y={0} width={128} height={128} href={activePair.hay} />
     </pattern>
   </>
   );

@@ -1,7 +1,8 @@
 import { useSelector } from "app/store";
+import { getActivePair } from "../game/slice";
 
 export function MenuBackground() {
-  const { activePair, emojiPairs } = useSelector((s) => s.haystack);
+  const activePair = useSelector((s) => getActivePair(s.haystack));
 
   return (
     <svg
@@ -12,7 +13,6 @@ export function MenuBackground() {
         transformOrigin: "center"
       }}
     ><defs>
-
         <pattern
           id="menu_background"
           viewBox="0,0,128,128"
@@ -24,14 +24,14 @@ export function MenuBackground() {
             y={0}
             width={32}
             height={32}
-            href={emojiPairs[activePair].needle}
+            href={activePair.needle}
           />
           <image
             x={64}
             y={64}
             width={32}
             height={32}
-            href={emojiPairs[activePair].hay}
+            href={activePair.hay}
           />
         </pattern>
     </defs>
