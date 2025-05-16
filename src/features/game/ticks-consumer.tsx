@@ -14,10 +14,10 @@ export const TicksConsumer = () => {
   return (
     <rect
       x="0"
-      y="260"
+      y="264"
       width="256"
       transform={`scale(${clamp(ticks / WAIT_TICKS, 0, 1)}, 1)`}
-      height="6.5"
+      height="1.5"
       stroke="none"
       fill="url(#gradient)"
     />

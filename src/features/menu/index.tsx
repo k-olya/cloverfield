@@ -56,9 +56,9 @@ export function Menu() {
           />
         </button>
       </div>
-      <div className="flex flex-col bg-gray-800 rounded-lg shadow-lg max-w-md w-full mx-4 max-h-screen">
+      <div className="flex flex-col bg-gray-800 rounded-lg shadow-lg max-w-md w-full mx-4 max-h-screen md:max-h-[70vh]">
         <div className="p-6 pb-0">
-          <h1 className="text-3xl font-bold text-center mb-4">Clover</h1>
+          <h1 className="text-3xl font-bold text-center mb-4">Find the emoji</h1>
         </div>
 
         <EmojiPairSelector />
