@@ -1,15 +1,14 @@
-import { Haystack } from "./features/game";
-import { Score } from "./features/game/score";
-import { ModeSwitcher } from "./features/game/mode-switcher";
-import { ThatsAllFolks } from "./features/game/thats-all-folks";
+import { useSelector } from "app/store";
+import { Game } from "./features/game";
+import { Menu } from "./features/menu";
 
 export default function App() {
+  const { gameState } = useSelector((s) => s.haystack);
+  const showMenu = gameState === "initial";
+
   return (
-    <div className="w-screen h-screen flex flex-col items-center justify-center bg-gray-700 text-white">
-      <Score />
-      <Haystack />
-      <ModeSwitcher />
-      <ThatsAllFolks />
+    <div className="w-screen h-screen flex flex-col items-center justify-center text-white">
+      {showMenu ? <Menu /> : <Game />}
     </div>
   );
 }

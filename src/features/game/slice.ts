@@ -1,16 +1,17 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { clamp, irand } from "app/math";
 
-export const ALL_MODIFIERS = ["speedrun", "mask", "headstart", "reduced-motion"] as const;
+export const ALL_MODIFIERS = ["speedrun", "headstart", "reduced-motion"] as const;
 export type Modifier = typeof ALL_MODIFIERS[number];
-export function isModifier(value: string): value is Modifier {
-  return ALL_MODIFIERS.includes(value as Modifier);
-}
+
+export const isModifier = (x: string): x is Modifier =>
+  ALL_MODIFIERS.includes(x as Modifier);
 
 export interface EmojiPair {
   needle: string;
   hay: string;
   name: string;
+  difficulty: number;
 }
 
 export interface Haystack {
@@ -30,20 +31,22 @@ export interface Haystack {
 
 // the game will continue playing upon reaching max score
 // but field size will not increase anymore
-export const MAX_SCORE = 40;
+export const MAX_SCORE = 41;
 export const WAIT_TICKS = 15.3 * 50;
 export const TICK_T = 20;
 
 const EMOJI_PAIRS: EmojiPair[] = [
   {
-    needle: "emoji_u1f340.svg",
-    hay: "emoji_u2618.svg",
-    name: "clover and shamrock"
+    needle: "/emoji/emoji_u1f47a.svg",
+    hay: "/emoji/emoji_u2618.svg",
+    name: "goblin and shamrock",
+    difficulty: 0.1
   },
   {
-    needle: "emoji_u1f47a.svg",
-    hay: "emoji_u2618.svg",
-    name: "mask and shamrock"
+    needle: "/emoji/emoji_u1f340.svg",
+    hay: "/emoji/emoji_u2618.svg",
+    name: "clover and shamrock",
+    difficulty: 0.8
   }
 ];
 
@@ -78,6 +81,8 @@ export const haystackSlice = createSlice({
       return {
         ...initialState,
         modifiers: state.modifiers,
+        activePair: state.activePair,
+        emojiPairs: state.emojiPairs,
         w,
         h,
         x: irand(w),
@@ -85,15 +90,18 @@ export const haystackSlice = createSlice({
       };
     },
     setModifiers: (state, { payload }: PayloadAction<Modifier[]>) => {
-      if (state.gameState !== "playing") {
-        state.modifiers = payload;
-      }
+      state.modifiers = payload;
+      haystackSlice.caseReducers.reset(state);
+    },
+    setActivePair: (state, { payload }: PayloadAction<number>) => {
+      state.activePair = payload;
       haystackSlice.caseReducers.reset(state);
     },
     increment: (state) => {
       if (state.gameState !== "finished") {
         if (state.gameState === "initial") {
           state.start = Date.now();
+        state.count--;
         }
         if (state.modifiers.includes("headstart")) {
           state.w = MAX_SCORE + initialState.w;
@@ -141,8 +149,7 @@ export const haystackSlice = createSlice({
   },
 });
 
-export const { increment, reset, tick, setModifiers } =
-  haystackSlice.actions;
+export const { setDimensions, reset, setModifiers, setActivePair, increment, tick } = haystackSlice.actions;
 
 export default haystackSlice.reducer;
 

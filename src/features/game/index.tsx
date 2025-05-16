@@ -6,6 +6,8 @@ import { Gradient } from "./gradient";
 import { TicksConsumer } from "./ticks-consumer";
 import { Needle } from "./needle";
 import { Hay } from "./hay";
+import { Score } from "./score";
+import { ThatsAllFolks } from "./thats-all-folks";
 
 export function Haystack() {
   const { w, h, x, y, gameState, modifiers } = useSelector(x => x.haystack);
@@ -24,7 +26,7 @@ export function Haystack() {
   // }, [w, h, x, y, modifiers, reducedMotion]);
 
   useEffect(() => {
-    dispatch(reset());
+    //dispatch(reset());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -66,5 +68,15 @@ export function Haystack() {
         onClick={() => dispatch(increment())}
       />
     </svg>
+  );
+}
+
+export function Game() {
+  return (
+    <>
+      <Score />
+      <Haystack />
+      <ThatsAllFolks />
+    </>
   );
 }

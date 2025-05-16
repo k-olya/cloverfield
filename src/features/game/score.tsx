@@ -14,7 +14,7 @@ const ScoreText = () => {
       </span>
     </span>
   ) : (
-    <span className="text-xl">Find {modifiers.includes("mask") ? <span className="inline-block transform -scale-x-100">👺</span> : "🍀"}</span>
+    <span className="text-xl">Find {<span className="inline-block transform -scale-x-100">👺</span> }</span>
   );
 };
 
