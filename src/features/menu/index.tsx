@@ -63,7 +63,9 @@ export function Menu() {
 
         <EmojiPairSelector />
 
-        <div className="border-t border-gray-700 bg-gray-800 p-6 rounded-b-lg">
+        <div className="relative px-6 pb-6 bg-gray-800 rounded-b-lg">
+      <div className="h-10 absolute -top-10 left-0 right-0 bg-gradient-to-t from-gray-800 to-gray-800/0 pointer-events-none"></div>
+      <div className="border-t border-gray-700 -mx-6 mb-6"></div>
           <div className="text-base font-medium mb-2">Game Modifiers</div>
           <div className="flex gap-2">
             <button

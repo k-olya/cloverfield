@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "app/store";
 import { setModifiers, Modifier } from "../game/slice";
+import { VolumeSlider } from "./volume-slider";
 
 interface SettingsProps {
   onClose: () => void;
@@ -56,14 +57,7 @@ export function Settings({ onClose }: SettingsProps) {
               {volume}%
             </span>
           </div>
-          <input
-            type="range"
-            min="0"
-            max="100"
-            value={volume}
-            onChange={(e) => setVolume(Number(e.target.value))}
-            className="w-full"
-          />
+          <VolumeSlider value={volume} onChange={setVolume} />
         </div>
       </div>
     </div>
