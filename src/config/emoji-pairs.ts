@@ -10,7 +10,7 @@ export const LEVELS: NamedLevelList = [
                 id: 1,
                 needle: "emoji/emoji_u1f340.svg",
                 hay: "emoji/emoji_u2618.svg",
-                name: "clover and shamrock",
+                name: "the four-leaf clover",
                 difficulty: 0.8
             },
             {
