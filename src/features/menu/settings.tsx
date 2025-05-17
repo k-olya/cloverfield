@@ -42,7 +42,7 @@ export function Settings({ onClose }: SettingsProps) {
             }`}
           >
             <img 
-              src={modifiers.includes("reduced-motion") ? "/emoji/emoji_u2714.svg" : "/emoji/emoji_u274c.svg"} 
+              src={modifiers.includes("reduced-motion") ? "emoji/emoji_u2714.svg" : "emoji/emoji_u274c.svg"} 
               alt={modifiers.includes("reduced-motion") ? "On" : "Off"}
               className="w-5 h-5" 
             />

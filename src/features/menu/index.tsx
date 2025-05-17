@@ -40,7 +40,7 @@ export function Menu() {
           className="w-10 h-10 flex items-center justify-center rounded bg-gray-800 hover:bg-gray-700"
         >
           <img 
-            src={isMuted ? "/emoji/emoji_u1f507.svg" : "/emoji/emoji_u1f3b5.svg"} 
+            src={isMuted ? "emoji/emoji_u1f507.svg" : "emoji/emoji_u1f3b5.svg"} 
             alt={isMuted ? "Unmute" : "Mute"}
             className="w-6 h-6"
           />
@@ -50,15 +50,15 @@ export function Menu() {
           className="w-10 h-10 flex items-center justify-center rounded bg-gray-800 hover:bg-gray-700"
         >
           <img 
-            src="/emoji/emoji_u2699.svg" 
+            src="emoji/emoji_u2699.svg" 
             alt="Settings"
             className="w-6 h-6"
           />
         </button>
       </div>
-      <div className="flex flex-col bg-gray-800 rounded-lg shadow-lg max-w-md w-full mx-4 max-h-screen md:max-h-[70vh]">
+      <div className="flex flex-col bg-gray-800 rounded-lg shadow-lg max-w-md w-full mx-4 max-h-[100dvh] md:max-h-[70vh]">
         <div className="p-6 pb-0">
-          <h1 className="text-3xl font-bold text-center mb-4">Find the emoji</h1>
+          <h1 className="text-3xl font-bold text-center mb-4">Find emoji</h1>
         </div>
 
         <EmojiPairSelector />
@@ -74,7 +74,7 @@ export function Menu() {
                   : "bg-gray-700 hover:bg-gray-600"
               }`}
             >
-              <img src="/emoji/emoji_u26a1.svg" alt="" className="w-6 h-6" />
+              <img src="emoji/emoji_u26a1.svg" alt="" className="w-6 h-6" />
               Speedrun
             </button>
             <button
@@ -85,7 +85,7 @@ export function Menu() {
                   : "bg-gray-700 hover:bg-gray-600"
               }`}
             >
-              <img src="/emoji/emoji_u1f680.svg" alt="" className="w-6 h-6" />
+              <img src="emoji/emoji_u1f680.svg" alt="" className="w-6 h-6" />
               Headstart
             </button>
           </div>
