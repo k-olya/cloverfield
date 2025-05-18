@@ -1,6 +1,7 @@
 import { useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "app/store";
-import { increment, reset } from "./slice";
+import { increment, reset, getActivePair } from "./slice";
+import { addGold } from "../save/slice";
 
 import { Gradient } from "./gradient";
 import { TicksConsumer } from "./ticks-consumer";
@@ -10,6 +11,7 @@ import { ThatsAllFolks } from "./thats-all-folks";
 
 export function Haystack() {
   const { w, h, x, y, gameState, modifiers } = useSelector(x => x.haystack);
+  const activePair = useSelector(state => getActivePair(state.haystack));
   const reducedMotion = modifiers.includes("reduced-motion");
   const dispatch = useDispatch();
   const ref = useRef(null);
@@ -33,6 +35,13 @@ export function Haystack() {
   const _h = 256 / h;
   const _x = x * _w;
   const _y = y * _h;
+
+  const handleNeedleClick = () => {
+    // Calculate gold reward based on grid width and difficulty
+    const goldReward = Math.ceil((w - 1) * Math.pow(activePair.difficulty, 2));
+    dispatch(addGold(goldReward));
+    dispatch(increment());
+  };
 
   return (
     <svg
@@ -63,7 +72,7 @@ export function Haystack() {
         h={_h}
         showPortal={gameState === "finished"}
         reducedMotion={reducedMotion}
-        onClick={() => dispatch(increment())}
+        onClick={handleNeedleClick}
       />
     </svg>
   );

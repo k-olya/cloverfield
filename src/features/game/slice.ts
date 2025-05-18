@@ -14,6 +14,7 @@ export interface EmojiPair {
   hay: string;
   name: string;
   difficulty: number;
+  price: number;
 }
 
 export type NamedLevelList = { name: string; levels: EmojiPair[]}[];

@@ -14,6 +14,7 @@ export function SettingsPanel({ children }: SettingsPanelProps) {
   const { gameState } = useSelector((s) => s.haystack);
   const isMuted = useSelector((s) => s.audio.muted);
   const audioInitialized = useSelector((s) => s.audio.initialized);
+  const gold = useSelector((s) => s.save.gold);
   const [showSettings, setShowSettings] = useState(false);
 
   const isPlaying = gameState === "playing";
@@ -59,7 +60,15 @@ export function SettingsPanel({ children }: SettingsPanelProps) {
         <div className="scale-75 origin-left">
           <Score />
         </div>
-        <div className="flex gap-1.5">
+        <div className="flex gap-1.5 items-center">
+          <div className="h-6 px-2 flex items-center gap-1 rounded bg-gray-800/80">
+            <img 
+              src="emoji/emoji_u1fa99.svg" 
+              alt="Gold"
+              className="w-4 h-4"
+            />
+            <span className="text-sm font-medium">{gold}</span>
+          </div>
           <button
             onClick={handleMuteClick}
             className="w-6 h-6 flex items-center justify-center rounded bg-gray-800/80 hover:bg-gray-700/80"

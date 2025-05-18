@@ -6,11 +6,13 @@ import {
 } from "react-redux";
 import haystack from "../features/game/slice";
 import audioReducer from "../features/audio/slice";
+import saveReducer from "../features/save/slice";
 
 export const store = configureStore({
   reducer: {
     haystack,
     audio: audioReducer,
+    save: saveReducer,
   },
 });
 

@@ -6,6 +6,7 @@ import "overlayscrollbars/overlayscrollbars.css";
 export function EmojiPairSelector() {
   const dispatch = useDispatch();
   const { levels, activePairId } = useSelector((s) => s.haystack);
+  const { gold, purchasedPairIds } = useSelector((s) => s.save);
   const activePair = useSelector((s) => getActivePair(s.haystack));
 
   return (<>
@@ -27,33 +28,48 @@ export function EmojiPairSelector() {
           <div key={levelSet.name}>
             <div className="text-xl font-bold mb-2">{levelSet.name}</div>
             <div className="flex flex-col gap-2">
-              {levelSet.levels.map((pair) => (
-                <button
-                  key={pair.id}
-                  onClick={() => dispatch(setActivePairId(pair.id))}
-                  className={`px-4 py-2 rounded ${
-                    activePairId === pair.id
-                      ? "bg-special-green text-white"
-                      : "bg-gray-700 hover:bg-gray-600"
-                  }`}
-                >
-                  <div className="flex items-center gap-2">
-                    <img src={pair.needle} alt="" className="w-6 h-6" />
-                    <img src={pair.hay} alt="" className="w-6 h-6" />
-                    <span>{pair.name}</span>
-                    <span className="text-sm opacity-50">
-                      {Math.round(pair.difficulty * 100)}%
-                    </span>
-                  </div>
-                </button>
-              ))}
+              {levelSet.levels.map((pair) => {
+                const isPurchased = purchasedPairIds.includes(pair.id);
+                const canAfford = gold >= pair.price;
+                const isActive = activePairId === pair.id;
+
+                return (
+                  <button
+                    key={pair.id}
+                    onClick={() => dispatch(setActivePairId(pair.id))}
+                    className={`px-4 py-2 rounded ${
+                      isActive
+                        ? "bg-special-green text-white"
+                        : "bg-gray-700 hover:bg-gray-600"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <img src={pair.needle} alt="" className="w-6 h-6" />
+                        <img src={pair.hay} alt="" className="w-6 h-6" />
+                        <span>{pair.name}</span>
+                      </div>
+                      <div className="flex items-center gap-3 text-sm">
+                        {!isPurchased && (
+                          <div className="flex items-center gap-1">
+                            <img src="emoji/emoji_u1fa99.svg" alt="Price" className="w-4 h-4" />
+                            <span className={canAfford ? "text-special-green" : "text-red-400"}>
+                              {pair.price}
+                            </span>
+                          </div>
+                        )}
+                        <span className="opacity-50">
+                          {Math.round(pair.difficulty * 100)}%
+                        </span>
+                      </div>
+                    </div>
+                  </button>
+                );
+              })}
             </div>
           </div>
         ))}
       </div>
     </OverlayScrollbarsComponent>
-      <div className="h-10 absolute bottom-0 left-0 right-0 bg-gradient-to-t from-gray-800 to-gray-800/0"></div>
-
-  </>
-  );
+  </>);
 } 
