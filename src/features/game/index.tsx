@@ -10,8 +10,7 @@ import { ThatsAllFolks } from "./thats-all-folks";
 
 export function Haystack() {
   const { w, h, x, y, gameState, modifiers } = useSelector(x => x.haystack);
-  const reducedMotion =
-    modifiers.includes("speedrun") || modifiers.includes("reduced-motion");
+  const reducedMotion = modifiers.includes("reduced-motion");
   const dispatch = useDispatch();
   const ref = useRef(null);
 

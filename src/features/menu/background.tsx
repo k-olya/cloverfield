@@ -1,8 +1,10 @@
 import { useSelector } from "app/store";
 import { getActivePair } from "../game/slice";
+import c from "classnames";
 
 export function MenuBackground() {
   const activePair = useSelector((s) => getActivePair(s.haystack));
+  const modifiers = useSelector((s) => s.haystack.modifiers);
 
   return (
     <svg
@@ -41,7 +43,10 @@ export function MenuBackground() {
         width="128"
         height="128"
         fill="url(#menu_background)"
-        className="animate-float"
+        className={c({
+          "animate-float": !modifiers.includes("reduced-motion"),
+          "transform rotate-45": modifiers.includes("reduced-motion"),
+        })}
         style={{transformOrigin: "center"}}
       />
     </svg>
