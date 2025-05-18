@@ -5,10 +5,12 @@ import {
   useSelector as _useSelector,
 } from "react-redux";
 import haystack from "../features/game/slice";
+import audioReducer from "../features/audio/slice";
 
 export const store = configureStore({
   reducer: {
     haystack,
+    audio: audioReducer,
   },
 });
 

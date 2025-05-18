@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "app/store";
 import { setPaused } from "../game/slice";
 import { Settings } from "./settings";
 import { Score } from "../game/score";
+import { initializeAudio, playAudio, muteAudio, unmuteAudio } from "../audio/slice";
 
 interface SettingsPanelProps {
   children: ReactNode;
@@ -11,8 +12,9 @@ interface SettingsPanelProps {
 export function SettingsPanel({ children }: SettingsPanelProps) {
   const dispatch = useDispatch();
   const { gameState } = useSelector((s) => s.haystack);
+  const isMuted = useSelector((s) => s.audio.muted);
+  const audioInitialized = useSelector((s) => s.audio.initialized);
   const [showSettings, setShowSettings] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
 
   const isPlaying = gameState === "playing";
   const isPaused = gameState === "paused";
@@ -28,19 +30,32 @@ export function SettingsPanel({ children }: SettingsPanelProps) {
     }
   };
 
+  const handleMuteClick = async () => {
+    if (!audioInitialized) {
+      await dispatch(initializeAudio());
+      await dispatch(playAudio());
+    } else {
+      if (isMuted) {
+        dispatch(unmuteAudio());
+      } else {
+        dispatch(muteAudio());
+      }
+    }
+  };
+
   if (showSettings) {
     return <Settings onClose={() => setShowSettings(false)} isPaused={isPaused} />;
   }
 
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 w-full px-2 flex items-center justify-between">
+      { ["playing", "paused", "initial"].includes(gameState) ? <div className="fixed top-0 left-0 right-0 w-full px-2 flex items-center justify-between">
         <div className="scale-75 origin-left">
           <Score />
         </div>
         <div className="flex gap-1.5">
           <button
-            onClick={() => setIsMuted(!isMuted)}
+            onClick={handleMuteClick}
             className="w-6 h-6 flex items-center justify-center rounded bg-gray-800/80 hover:bg-gray-700/80"
           >
             <img 
@@ -73,7 +88,7 @@ export function SettingsPanel({ children }: SettingsPanelProps) {
             </button>
           )}
         </div>
-      </div>
+      </div> : <></> }
       {children}
     </>
   );

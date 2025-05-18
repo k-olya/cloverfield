@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "app/store";
 import { setModifiers, Modifier, setPaused, reset } from "../game/slice";
 import { VolumeSlider } from "./volume-slider";
 import { MenuBackground } from "./background";
+import { setAudioVolume } from "../audio/slice";
 
 interface SettingsProps {
   onClose: () => void;
@@ -12,7 +13,7 @@ interface SettingsProps {
 export function Settings({ onClose, isPaused }: SettingsProps) {
   const dispatch = useDispatch();
   const { modifiers } = useSelector((s) => s.haystack);
-  const [volume, setVolume] = useState(100);
+  const volume = useSelector((s) => Math.round(s.audio.volume * 100));
 
   const toggleReducedMotion = () => {
     const newModifiers = modifiers.includes("reduced-motion")
@@ -29,6 +30,10 @@ export function Settings({ onClose, isPaused }: SettingsProps) {
   const handleBackToMenu = () => {
     dispatch(reset());
     onClose();
+  };
+
+  const handleVolumeChange = (v: number) => {
+    dispatch(setAudioVolume(v / 100));
   };
 
   return (
@@ -71,7 +76,7 @@ export function Settings({ onClose, isPaused }: SettingsProps) {
               {volume}%
             </span>
           </div>
-            <VolumeSlider value={volume} onChange={setVolume} />
+            <VolumeSlider value={volume} onChange={handleVolumeChange} />
           </div>
 
           {isPaused && (
