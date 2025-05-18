@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "app/store";
-import { setModifiers, Modifier } from "../game/slice";
+import { setModifiers, Modifier, setPaused, reset } from "../game/slice";
 import { VolumeSlider } from "./volume-slider";
+import { MenuBackground } from "./background";
 
 interface SettingsProps {
   onClose: () => void;
+  isPaused?: boolean;
 }
 
-export function Settings({ onClose }: SettingsProps) {
+export function Settings({ onClose, isPaused }: SettingsProps) {
   const dispatch = useDispatch();
   const { modifiers } = useSelector((s) => s.haystack);
   const [volume, setVolume] = useState(100);
@@ -19,7 +21,19 @@ export function Settings({ onClose }: SettingsProps) {
     dispatch(setModifiers(newModifiers));
   };
 
+  const handleContinue = () => {
+    dispatch(setPaused(false));
+    onClose();
+  };
+
+  const handleBackToMenu = () => {
+    dispatch(reset());
+    onClose();
+  };
+
   return (
+    <>
+      <MenuBackground />
     <div className="flex flex-col gap-4 bg-gray-800 p-6 rounded-lg shadow-lg max-w-md w-full mx-4">
       <div className="flex justify-between items-center">
         <div className="text-xl font-bold">Settings</div>
@@ -57,9 +71,27 @@ export function Settings({ onClose }: SettingsProps) {
               {volume}%
             </span>
           </div>
-          <VolumeSlider value={volume} onChange={setVolume} />
+            <VolumeSlider value={volume} onChange={setVolume} />
+          </div>
+
+          {isPaused && (
+            <div className="flex flex-col gap-2 mt-2">
+              <button
+                onClick={handleContinue}
+                className="w-full px-4 py-2 rounded bg-special-green hover:bg-special-green/90 text-white font-bold"
+              >
+                Continue Game
+              </button>
+              <button
+                onClick={handleBackToMenu}
+                className="w-full px-4 py-2 rounded bg-gray-700 hover:bg-gray-600 text-white"
+              >
+                Back to Main Menu
+              </button>
+            </div>
+          )}
         </div>
       </div>
-    </div>
+    </>
   );
 } 

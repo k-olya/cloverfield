@@ -1,15 +1,12 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "app/store";
-import { setModifiers, Modifier, increment } from "../game/slice";
-import { Settings } from "./settings";
+import { setModifiers, Modifier, increment, reset } from "../game/slice";
 import { MenuBackground } from "./background";
 import { EmojiPairSelector } from "./emoji-pair-selector";
 
 export function Menu() {
   const dispatch = useDispatch();
   const { modifiers } = useSelector((s) => s.haystack);
-  const [showSettings, setShowSettings] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
 
   const toggleModifier = (modifier: Modifier) => {
     const newModifiers = modifiers.includes(modifier)
@@ -19,43 +16,13 @@ export function Menu() {
   };
 
   const startGame = () => {
+    dispatch(reset());
     dispatch(increment());
   };
-
-  if (showSettings) {
-    return (
-      <>
-        <MenuBackground />
-        <Settings onClose={() => setShowSettings(false)} />
-      </>
-    );
-  }
 
   return (
     <>
       <MenuBackground />
-      <div className="fixed top-4 right-4 flex gap-2">
-        <button
-          onClick={() => setIsMuted(!isMuted)}
-          className="w-10 h-10 flex items-center justify-center rounded bg-gray-800 hover:bg-gray-700"
-        >
-          <img 
-            src={isMuted ? "emoji/emoji_u1f507.svg" : "emoji/emoji_u1f3b5.svg"} 
-            alt={isMuted ? "Unmute" : "Mute"}
-            className="w-6 h-6"
-          />
-        </button>
-        <button
-          onClick={() => setShowSettings(true)}
-          className="w-10 h-10 flex items-center justify-center rounded bg-gray-800 hover:bg-gray-700"
-        >
-          <img 
-            src="emoji/emoji_u2699.svg" 
-            alt="Settings"
-            className="w-6 h-6"
-          />
-        </button>
-      </div>
       <div className="flex flex-col bg-gray-800 rounded-lg shadow-lg max-w-md w-full mx-4 max-h-[100dvh] md:max-h-[70vh]">
         <div className="p-6 pb-0">
           <h1 className="text-3xl font-bold text-center mb-4">Find emoji</h1>

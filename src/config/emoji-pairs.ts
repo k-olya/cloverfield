@@ -289,8 +289,8 @@ export const LEVELS: NamedLevelList = [
             },
             {
                 "id": 1452,
-                "needle": "emoji/emoji_u2603.svg",
-                "hay": "emoji/emoji_u26c4.svg",
+                "needle": "emoji/emoji_u26c4.svg",
+                "hay": "emoji/emoji_u2603.svg",
                 "name": "let it snow",
                 "difficulty": 0.85
             },

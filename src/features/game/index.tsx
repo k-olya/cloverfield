@@ -6,7 +6,6 @@ import { Gradient } from "./gradient";
 import { TicksConsumer } from "./ticks-consumer";
 import { Needle } from "./needle";
 import { Hay } from "./hay";
-import { Score } from "./score";
 import { ThatsAllFolks } from "./thats-all-folks";
 
 export function Haystack() {
@@ -40,7 +39,7 @@ export function Haystack() {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="-15 -3 286 276"
-      className="landscape:h-full origin-top"
+      className="landscape:h-full origin-top landscape:mt-10"
       role="img"
       aria-label="haystack"
       ref={ref}
@@ -74,7 +73,6 @@ export function Haystack() {
 export function Game() {
   return (
     <>
-      <Score />
       <Haystack />
       <ThatsAllFolks />
     </>

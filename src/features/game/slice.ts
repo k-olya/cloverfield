@@ -25,7 +25,7 @@ export interface Haystack {
   y: number;
   count: number;
   ticks: number;
-  gameState: "initial" | "playing" | "finished";
+  gameState: "initial" | "playing" | "paused" | "finished";
   modifiers: Modifier[];
   start?: number | null;
   finish?: number | null;
@@ -71,6 +71,13 @@ export const haystackSlice = createSlice({
       state.w = payload.w;
       state.h = payload.h;
     },
+    setPaused: (state, { payload }: PayloadAction<boolean>) => {
+      if (state.gameState === "playing" && payload) {
+        state.gameState = "paused";
+      } else if (state.gameState === "paused" && !payload) {
+        state.gameState = "playing";
+      }
+    },
     reset: (state) => {
       const headstart = state.modifiers.includes("headstart") ? MAX_SCORE : 0;
       const w = headstart + initialState.w;
@@ -98,7 +105,7 @@ export const haystackSlice = createSlice({
       if (state.gameState !== "finished") {
         if (state.gameState === "initial") {
           state.start = Date.now();
-          state.count--;
+          state.count = -1;
         }
         if (state.modifiers.includes("headstart")) {
           state.w = MAX_SCORE + initialState.w;
@@ -146,7 +153,7 @@ export const haystackSlice = createSlice({
   },
 });
 
-export const { setDimensions, reset, setModifiers, setActivePairId, increment, tick } = haystackSlice.actions;
+export const { setDimensions, reset, setModifiers, setActivePairId, increment, tick, setPaused } = haystackSlice.actions;
 
 export default haystackSlice.reducer;
 

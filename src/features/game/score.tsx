@@ -1,10 +1,12 @@
 import { useSelector } from "app/store";
 import { MSCounter } from "./ms-counter";
-import { MAX_SCORE } from "./slice";
+import { getActivePair, MAX_SCORE } from "./slice";
 
 const ScoreText = () => {
   const { count, gameState, modifiers } = useSelector((x) => x.haystack);
-  if (gameState === "finished") return null;
+  const activePair = useSelector(state => getActivePair(state.haystack));
+
+  if (["initial", "finished"].includes(gameState)) return null;
   return count ? (
     <span className="text-xl">
       Score:{" "}
@@ -14,7 +16,9 @@ const ScoreText = () => {
       </span>
     </span>
   ) : (
-    <span className="text-xl">Find {<span className="inline-block transform -scale-x-100">👺</span> }</span>
+    <span className="text-xl flex items-center">
+      <span>Find</span><img src={activePair?.needle} className="w-6 h-6 ml-2" />
+    </span>
   );
 };
 

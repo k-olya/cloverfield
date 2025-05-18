@@ -1,6 +1,7 @@
 import { useSelector } from "app/store";
 import { Game } from "./features/game";
 import { Menu } from "./features/menu";
+import { SettingsPanel } from "./features/menu/settings-panel";
 
 export default function App() {
   const { gameState } = useSelector((s) => s.haystack);
@@ -8,7 +9,9 @@ export default function App() {
 
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-center text-white">
+      <SettingsPanel>
       {showMenu ? <Menu /> : <Game />}
+      </SettingsPanel>
     </div>
   );
 }
