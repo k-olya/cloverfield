@@ -1,15 +1,11 @@
 # Find 🍀
 
 Find a four-leaf clover (🍀) in a field of shamrock (☘️).
-A live version is hosted at https://theradio.tk/games/clover
+A live version is hosted at https://games.theradio.me/clover
 
-## Gameplay modifiers
+Uses emoji from https://github.com/googlefonts/noto-emoji
 
-Can be combined
-
-### `?modifiers=speedrun` - speedrun mode
-
-### `?modifiers=headstart` - start at maximum field width
+Music by White Bat Audio https://www.youtube.com/whitebataudio
 
 ## Available Scripts
 
