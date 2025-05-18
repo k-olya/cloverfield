@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import c from "classnames";
 import { useSelector, useDispatch } from "app/store";
-import { reset, MAX_SCORE } from "./slice";
+import { reset, MAX_SCORE, increment, revive } from "./slice";
 import { BiReset } from "react-icons/bi";
 import { MenuBackground } from "../menu/background";
 
@@ -44,13 +44,25 @@ export const ThatsAllFolks = () => {
           </div>
 
           <div className="border-t border-gray-700 -mx-6 my-4"></div>
-
-          <button
+      {!modifiers.includes("speedrun") ? <button
             className="w-full px-4 py-3 rounded bg-special-green hover:bg-special-green/90 text-white text-lg font-bold transform transition-transform hover:scale-105 flex items-center justify-center gap-2"
-            onClick={() => dispatch(reset())}
+            onClick={() => dispatch(revive())}
           >
             <BiReset className="w-6 h-6" />
+            Revive for an ad
+          </button> : <></>}
+          <button
+            className="mt-4 w-full px-4 py-3 rounded rounded bg-gray-700 hover:bg-gray-600 text-white text-lg font-bold transform transition-transform hover:scale-105 flex items-center justify-center gap-2"
+            onClick={() => dispatch(reset())}
+          >
             To the menu
+          </button>
+<button
+            className="mt-4 w-full px-4 py-3 rounded bg-gray-700 hover:bg-gray-600 text-white text-lg font-bold transform transition-transform hover:scale-105 flex items-center justify-center gap-2"
+            onClick={() => {dispatch(reset()); dispatch(increment()); }}
+          >
+            <BiReset className="w-6 h-6" />
+            Try again
           </button>
         </div>
       </div>

@@ -142,6 +142,13 @@ export const haystackSlice = createSlice({
         }
       }
     },
+    revive: (state) => {
+      state.gameState = "playing";
+      state.finish = null;
+      state.ticks = WAIT_TICKS;
+      state.x = irand(state.w);
+      state.y = irand(state.h);
+    },
     tick: (state) => {
       if (state.gameState === "playing") {
         state.ticks = clamp(state.ticks - 1, 0, WAIT_TICKS);
@@ -154,7 +161,7 @@ export const haystackSlice = createSlice({
   },
 });
 
-export const { setDimensions, reset, setModifiers, setActivePairId, increment, tick, setPaused } = haystackSlice.actions;
+export const { setDimensions, reset, setModifiers, setActivePairId, increment, tick, setPaused, revive } = haystackSlice.actions;
 
 export default haystackSlice.reducer;
 

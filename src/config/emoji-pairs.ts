@@ -57,7 +57,7 @@ export const LEVELS: NamedLevelList = [
                 "hay": "emoji/emoji_u1f416.svg",
                 "name": "oink",
                 "difficulty": 0.58,
-                "price": 3000
+                "price": 1500
             },
             {
                 "id": 69930,
@@ -88,8 +88,8 @@ export const LEVELS: NamedLevelList = [
                 hay: "emoji/emoji_u1fa99.svg",
                 needle: "emoji/emoji_u1f34b.svg",
                 name: "when life gives you lemons",
-                difficulty: 0.48,
-                price: 10000
+                difficulty: 0.32,
+                price: 500
             },
             {
                 id: 11,
@@ -294,7 +294,7 @@ export const LEVELS: NamedLevelList = [
                 "hay": "emoji/emoji_u0039_20e3.svg",
                 "name": "pricing trick",
                 "difficulty": 0.8,
-                "price": 4999
+                "price": 3999
             },
         ])
     },

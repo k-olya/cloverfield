@@ -32,8 +32,8 @@ export function Menu() {
 
   return (
     <>
-      <MenuBackground />
-      <div className="flex flex-col bg-gray-800 rounded-lg shadow-lg max-w-md w-full mx-4 max-h-[100dvh] md:max-h-[70vh]">
+      <MenuBackground /><div className="h-full flex flex-col justify-center items-center pt-[3rem] w-full mx-4">
+      <div className="flex flex-col bg-gray-800 rounded-lg shadow-lg max-w-md w-full h-full max-h-[100dvh] md:max-h-[70vh] md:mt-0">
         <div className="p-6 pb-0">
           <h1 className="text-3xl font-bold text-center mb-4">Find emoji</h1>
         </div>
@@ -89,6 +89,8 @@ export function Menu() {
             <span>{isPurchased ? "Start Game" : "Buy"}</span>
           </button>
         </div>
+      </div>
+
       </div>
     </>
   );

@@ -47,7 +47,7 @@ export function EmojiPairSelector() {
                       <div className="flex items-center gap-2">
                         <img src={pair.needle} alt="" className="w-6 h-6" />
                         <img src={pair.hay} alt="" className="w-6 h-6" />
-                        <span>{pair.name}</span>
+                        <span className="text-left">{pair.name}</span>
                       </div>
                       <div className="flex items-center gap-3 text-sm">
                         {!isPurchased && (
