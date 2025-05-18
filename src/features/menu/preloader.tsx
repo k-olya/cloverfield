@@ -11,6 +11,7 @@ const EXTRA_IMAGES = [
   "emoji/emoji_u23f8.svg", // pause
   "emoji/emoji_u25b6.svg", // play
   "emoji/emoji_u2699.svg", // settings gear
+  "emoji/emoji_u1f3ac.svg" // movie emoji
 ];
 
 function getAllImagePaths() {

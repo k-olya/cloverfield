@@ -48,7 +48,7 @@ export const ThatsAllFolks = () => {
             className="w-full px-4 py-3 rounded bg-special-green hover:bg-special-green/90 text-white text-lg font-bold transform transition-transform hover:scale-105 flex items-center justify-center gap-2"
             onClick={() => dispatch(revive())}
           >
-            <BiReset className="w-6 h-6" />
+            <img src="emoji/emoji_u1f3ac.svg" className="w-6 h-6" />
             Revive for an ad
           </button> : <></>}
           <button
