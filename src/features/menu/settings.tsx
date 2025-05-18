@@ -23,7 +23,9 @@ export function Settings({ onClose, isPaused }: SettingsProps) {
   };
 
   const handleContinue = () => {
-    dispatch(setPaused(false));
+    if (isPaused) {
+      dispatch(setPaused(false));
+    }
     onClose();
   };
 
@@ -43,7 +45,7 @@ export function Settings({ onClose, isPaused }: SettingsProps) {
       <div className="flex justify-between items-center">
         <div className="text-xl font-bold">Settings</div>
         <button
-          onClick={onClose}
+          onClick={handleContinue}
           className="text-gray-400 hover:text-white"
         >
           ✕

@@ -1,4 +1,4 @@
-import { useState, ReactNode } from "react";
+import { useState, ReactNode, useEffect } from "react";
 import { useSelector, useDispatch } from "app/store";
 import { setPaused } from "../game/slice";
 import { Settings } from "./settings";
@@ -19,6 +19,12 @@ export function SettingsPanel({ children }: SettingsPanelProps) {
   const isPlaying = gameState === "playing";
   const isPaused = gameState === "paused";
   const showPauseControls = isPlaying || isPaused;
+
+  useEffect(() => {
+    if (isPaused && ! showSettings) {
+      setShowSettings(true);
+    }
+  }, [isPaused, showSettings]);
 
   const handlePauseClick = () => {
     if (isPlaying) {

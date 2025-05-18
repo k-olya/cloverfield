@@ -119,11 +119,13 @@ class AudioPlayer {
   mute() {
     this.isMuted = true;
     if (this.gainNode) this.gainNode.gain.value = 0;
+    this.pause();
   }
 
   unmute() {
     this.isMuted = false;
     if (this.gainNode) this.gainNode.gain.value = this.volume;
+    this.resume();
   }
 
   getVolume() {
