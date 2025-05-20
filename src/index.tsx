@@ -21,7 +21,7 @@ if (window.YaGames) {
       // @ts-ignore
       const lang = window.ysdk.environment.i18n.lang;
       console.log("Detected language: ", lang);
-      initI18n(lang).then(() => {
+      initI18n(lang ?? "ru").then(() => {
         root.render(
           <React.StrictMode>
             <I18nextProvider i18n={i18n}>
