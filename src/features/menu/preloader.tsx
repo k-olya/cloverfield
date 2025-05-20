@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { EMOJI_PAIRS } from "../../config/emoji-pairs";
+import { useTranslation } from "react-i18next";
 
 const EXTRA_IMAGES = [
   "emoji/emoji_u2714.svg", // check mark
@@ -27,6 +28,7 @@ function getAllImagePaths() {
 export function Preloader({ children }: { children: React.ReactNode }) {
   const [progress, setProgress] = useState(0);
   const [done, setDone] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const images = getAllImagePaths();
@@ -61,7 +63,7 @@ export function Preloader({ children }: { children: React.ReactNode }) {
   if (!done) {
     return (
       <div className="w-screen h-screen flex flex-col items-center justify-center bg-gray-800 text-white">
-        <div className="text-2xl mb-4">Loading images…</div>
+        <div className="text-2xl mb-4">{t("Loading images...")}</div>
         <div className="w-64 h-4 bg-gray-700 rounded overflow-hidden mb-2">
           <div
             className="bg-special-green h-full transition-all"
