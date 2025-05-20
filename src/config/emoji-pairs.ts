@@ -484,3 +484,4 @@ export const EMOJI_PAIRS: EmojiPair[] = [
 ];
 
 console.log("Levels: ", EMOJI_PAIRS.length);
+console.log(Object.fromEntries(EMOJI_PAIRS.map(e => [e.name, e.name])))
