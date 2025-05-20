@@ -45,7 +45,7 @@ export function Menu() {
         <div className="relative px-6 pb-6 bg-gray-800 rounded-b-lg">
           <div className="h-10 absolute -top-10 left-0 right-0 bg-gradient-to-t from-gray-800 to-gray-800/0 pointer-events-none"></div>
           <div className="border-t border-gray-700 -mx-6 mb-6"></div>
-          <div className="text-base font-medium mb-2">Game Modifiers</div>
+          <div className="text-base font-medium mb-2">{t("Game Modifiers")}</div>
           <div className="flex gap-2">
             <button
               onClick={() => toggleModifier("speedrun")}
@@ -56,7 +56,7 @@ export function Menu() {
               }`}
             >
               <img src="emoji/emoji_u26a1.svg" alt="" className="w-6 h-6" />
-              Speedrun
+              {t("Speedrun")}
             </button>
             <button
               onClick={() => toggleModifier("headstart")}
@@ -67,7 +67,7 @@ export function Menu() {
               }`}
             >
               <img src="emoji/emoji_u1f680.svg" alt="" className="w-6 h-6" />
-              Headstart
+              {t("Headstart")}
             </button>
           </div>
 

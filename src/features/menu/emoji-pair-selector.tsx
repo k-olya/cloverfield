@@ -2,12 +2,14 @@ import { useSelector, useDispatch } from "app/store";
 import { setActivePairId, getActivePair } from "../game/slice";
 import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
 import "overlayscrollbars/overlayscrollbars.css";
+import { useTranslation } from "react-i18next";
 
 export function EmojiPairSelector() {
   const dispatch = useDispatch();
   const { levels, activePairId } = useSelector((s) => s.haystack);
   const { gold, purchasedPairIds } = useSelector((s) => s.save);
   const activePair = useSelector((s) => getActivePair(s.haystack));
+  const { t } = useTranslation();
 
   return (<>
     <OverlayScrollbarsComponent
@@ -26,7 +28,7 @@ export function EmojiPairSelector() {
       <div className="flex flex-col gap-6">
         {levels.map((levelSet) => (
           <div key={levelSet.name}>
-            <div className="text-xl font-bold mb-2">{levelSet.name}</div>
+            <div className="text-xl font-bold mb-2">{t(levelSet.name)}</div>
             <div className="flex flex-col gap-2">
               {levelSet.levels.map((pair) => {
                 const isPurchased = purchasedPairIds.includes(pair.id);
@@ -47,7 +49,7 @@ export function EmojiPairSelector() {
                       <div className="flex items-center gap-2">
                         <img src={pair.needle} alt="" className="w-6 h-6" />
                         <img src={pair.hay} alt="" className="w-6 h-6" />
-                        <span className="text-left">{pair.name}</span>
+                        <span className="text-left">{t(pair.name)}</span>
                       </div>
                       <div className="flex items-center gap-3 text-sm">
                         {!isPurchased && (

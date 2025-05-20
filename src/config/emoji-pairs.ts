@@ -471,7 +471,7 @@ export const LEVELS: NamedLevelList = [
                 needle: "emoji/emoji_u1f340.svg",
                 hay: "emoji/emoji_u1f340.svg",
                 name: "pure luck",
-                difficulty: 3.0,
+                difficulty: 10.0,
                 price: 777
             },
         ]
