@@ -33,6 +33,7 @@ export interface Haystack {
   activePairId: number;
   levels: NamedLevelList;
   revives: number;
+  toMenuClicks: number;
 }
 
 // the game will continue playing upon reaching max score
@@ -52,7 +53,8 @@ const initialState: Haystack = {
   modifiers: [],
   activePairId: 1, // Default to first level in Classic set
   levels: LEVELS,
-  revives: 2
+  revives: 2,
+  toMenuClicks: 0
 };
 
 export const getActivePair = (state: Haystack): EmojiPair => {
@@ -90,6 +92,7 @@ export const haystackSlice = createSlice({
         modifiers: state.modifiers,
         activePairId: state.activePairId,
         levels: state.levels,
+        toMenuClicks: state.toMenuClicks,
         w,
         h,
         x: irand(w),
@@ -162,9 +165,12 @@ export const haystackSlice = createSlice({
         }
       }
     },
+    toMenu: (state) => {
+      state.toMenuClicks++;
+    }
   },
 });
 
-export const { setDimensions, reset, setModifiers, setActivePairId, increment, tick, setPaused, revive } = haystackSlice.actions;
+export const { setDimensions, reset, setModifiers, setActivePairId, increment, tick, setPaused, revive, toMenu } = haystackSlice.actions;
 
 export default haystackSlice.reducer;

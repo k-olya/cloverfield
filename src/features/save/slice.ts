@@ -44,6 +44,15 @@ export const saveSlice = createSlice({
     },
     addGold: (state, action: PayloadAction<number>) => {
       state.gold += action.payload;
+      // sync with yandex sdk
+      // @ts-ignore
+      if (window.player) {
+        // @ts-ignore
+        window.player.setData({
+          gold: state.gold,
+          purchasedPairIds: state.purchasedPairIds,
+        });
+      }
       // Sync with localStorage
       try {
         localStorage.setItem(SAVE_STATE_KEY, JSON.stringify(state));
@@ -56,12 +65,31 @@ export const saveSlice = createSlice({
       if (state.gold >= price && !state.purchasedPairIds.includes(id)) {
         state.gold -= price;
         state.purchasedPairIds.push(id);
+        // sync with yandex sdk
+        // @ts-ignore
+        if (window.player) {
+          // @ts-ignore
+          window.player.setData({
+            gold: state.gold,
+            purchasedPairIds: state.purchasedPairIds,
+          });
+        }
         // Sync with localStorage
         try {
           localStorage.setItem(SAVE_STATE_KEY, JSON.stringify(state));
         } catch (error) {
           console.error('Failed to save state:', error);
         }
+      }
+    },
+    setSaveState: (state, action: PayloadAction<SaveState>) => {
+      state.purchasedPairIds = action.payload.purchasedPairIds;
+      state.gold = action.payload.gold;
+      // Sync with localStorage
+      try {
+        localStorage.setItem(SAVE_STATE_KEY, JSON.stringify(state));
+      } catch (error) {
+        console.error('Failed to save state:', error);
       }
     },
     resetSave: (state) => {
@@ -76,6 +104,6 @@ export const saveSlice = createSlice({
   }
 });
 
-export const { setGold, addGold, purchasePair, resetSave } = saveSlice.actions;
+export const { setGold, addGold, purchasePair, resetSave, setSaveState: setPurchasedPairIds } = saveSlice.actions;
 
 export default saveSlice.reducer; 

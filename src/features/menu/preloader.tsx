@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { EMOJI_PAIRS } from "../../config/emoji-pairs";
 import { useTranslation } from "react-i18next";
+import { setGold, setPurchasedPairIds } from "features/save/slice";
+import { useDispatch } from "app/store";
 
 const EXTRA_IMAGES = [
   "emoji/emoji_u2714.svg", // check mark
@@ -28,6 +30,7 @@ function getAllImagePaths() {
 export function Preloader({ children }: { children: React.ReactNode }) {
   const [progress, setProgress] = useState(0);
   const [done, setDone] = useState(false);
+  const dispatch = useDispatch();
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -56,6 +59,18 @@ export function Preloader({ children }: { children: React.ReactNode }) {
       init.current = true;
       // @ts-ignore
       window.ysdk.features.LoadingAPI.ready();
+
+      // load player data
+      // @ts-ignore
+      if (window.player) {
+        // @ts-ignore
+        const data = window.player.getData();
+        console.log("Player data: ", data);
+        if (data && data.purchasedPairIds && data.gold) {
+          dispatch(setPurchasedPairIds(data.purchasedPairIds));
+          dispatch(setGold(data.gold));
+        }
+      }
     }
   }, [init.current, done]);
 

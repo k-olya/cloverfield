@@ -14,13 +14,21 @@ const root = createRoot(container);
 // @ts-ignore
 if (window.YaGames) {
   // @ts-ignore
-  window.YaGames.init().then(ysdk => {
+  window.YaGames.init().then(async ysdk => {
       console.log('Yandex SDK initialized');
       // @ts-ignore
       window.ysdk = ysdk;
       // @ts-ignore
+      const player = await window.ysdk.getPlayer();
+      // @ts-ignore
+      window.player = player;
+      console.log("Player data: ", player);
+      // @ts-ignore
       const lang = window.ysdk.environment.i18n.lang;
       console.log("Detected language: ", lang);
+      // show ad
+      // @ts-ignore
+      ysdk.adv.showFullscreenAdv({callbacks:{}})
       initI18n(lang ?? "ru").then(() => {
         root.render(
           <React.StrictMode>
