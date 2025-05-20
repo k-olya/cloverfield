@@ -4,12 +4,14 @@ import { setModifiers, Modifier, increment, reset, getActivePair } from "../game
 import { purchasePair } from "../save/slice";
 import { MenuBackground } from "./background";
 import { EmojiPairSelector } from "./emoji-pair-selector";
+import { useTranslation } from "react-i18next";
 
 export function Menu() {
   const dispatch = useDispatch();
   const { modifiers } = useSelector((s) => s.haystack);
   const activePair = useSelector(state => getActivePair(state.haystack));
   const { gold, purchasedPairIds } = useSelector((s) => s.save);
+  const { t } = useTranslation();
 
   const isPurchased = purchasedPairIds.includes(activePair.id);
   const canAfford = gold >= activePair.price;
@@ -32,10 +34,10 @@ export function Menu() {
 
   return (
     <>
-      <MenuBackground /><div className="h-full flex flex-col justify-center items-center pt-[3rem] w-full mx-4">
+      <MenuBackground /><div className="h-[100dvh] max-h-[100dvh] flex flex-col justify-center items-center pt-[48px] pb-[24px] w-full mx-4">
       <div className="flex flex-col bg-gray-800 rounded-lg shadow-lg max-w-md w-full h-full max-h-[100dvh] md:max-h-[70vh] md:mt-0">
         <div className="p-6 pb-0">
-          <h1 className="text-3xl font-bold text-center mb-4">Find emoji</h1>
+          <h1 className="text-3xl font-bold text-center mb-4">{t("Find emoji")}</h1>
         </div>
 
         <EmojiPairSelector />
@@ -86,7 +88,7 @@ export function Menu() {
                 <span>{activePair.price}</span>
               </>
             )}
-            <span>{isPurchased ? "Start Game" : "Buy"}</span>
+            <span>{isPurchased ? t("Start Game") : t("Buy")}</span>
           </button>
         </div>
       </div>

@@ -12,6 +12,7 @@
     "@types/node": "^17.0.45",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
+    "@types/ysdk": "^1.0.8",
     "classnames": "^2.3.2",
     "dayjs": "^1.11.7",
     "i18next": "^21.10.0",
@@ -30,7 +31,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "copy-emoji": "bash scripts/copy-emojis.sh"
+    "copy-emoji": "bash scripts/copy-emojis.sh",
+    "deploy": "bash scripts/deploy.sh"
   },
   "eslintConfig": {
     "extends": [

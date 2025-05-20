@@ -58,7 +58,7 @@ export function EmojiPairSelector() {
                             </span>
                           </div>
                         )}
-                        <span className="opacity-50">
+                        <span className="opacity-50 ml-1">
                           {Math.round(pair.difficulty * 100)}%
                         </span>
                       </div>

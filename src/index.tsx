@@ -3,12 +3,38 @@ import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import { store } from "./app/store";
 import App from "./App";
-import './i18n';
 // import reportWebVitals from './reportWebVitals';
 import "./index.css";
-
+import { initI18n } from "i18n";
+import i18n from "i18n";
+import { I18nextProvider } from "react-i18next";
 const container = document.getElementById("root")!;
 const root = createRoot(container);
+
+// @ts-ignore
+if (window.YaGames) {
+  // @ts-ignore
+  window.YaGames.init().then(ysdk => {
+      console.log('Yandex SDK initialized');
+      // @ts-ignore
+      window.ysdk = ysdk;
+      // @ts-ignore
+      const lang = window.ysdk.environment.i18n.lang;
+      console.log("Detected language: ", lang);
+      initI18n(lang).then(() => {
+        root.render(
+          <React.StrictMode>
+            <I18nextProvider i18n={i18n}>
+            <Provider store={store}>
+              <App />
+            </Provider>
+
+            </I18nextProvider>
+          </React.StrictMode>
+        );
+      })
+  });
+}
 
 root.render(
   <React.StrictMode>

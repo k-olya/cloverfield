@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { EMOJI_PAIRS } from "../../config/emoji-pairs";
 
 const EXTRA_IMAGES = [
@@ -45,6 +45,18 @@ export function Preloader({ children }: { children: React.ReactNode }) {
       img.src = src;
     });
   }, []);
+
+  // call ygames ready()
+  const init = useRef(false);
+  useEffect(() => {
+    // @ts-ignore
+    if (!init.current && done && window.ysdk) {
+      init.current = true;
+      // @ts-ignore
+      window.ysdk.features.LoadingAPI.ready();
+    }
+  }, [init.current, done]);
+
 
   if (!done) {
     return (
