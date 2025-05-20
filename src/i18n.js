@@ -13,7 +13,7 @@ const resources = {
   },
 };
 
-export const initI18n = (lng = 'en') => i18n
+export const initI18n = (lng = 'ru') => i18n
   .use(initReactI18next)
   .init({
     resources, // we will add translations here

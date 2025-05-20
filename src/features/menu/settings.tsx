@@ -4,6 +4,7 @@ import { setModifiers, Modifier, setPaused, reset } from "../game/slice";
 import { VolumeSlider } from "./volume-slider";
 import { MenuBackground } from "./background";
 import { setAudioVolume } from "../audio/slice";
+import { useTranslation } from "react-i18next";
 
 interface SettingsProps {
   onClose: () => void;
@@ -14,6 +15,7 @@ export function Settings({ onClose, isPaused }: SettingsProps) {
   const dispatch = useDispatch();
   const { modifiers } = useSelector((s) => s.haystack);
   const volume = useSelector((s) => Math.round(s.audio.volume * 100));
+  const { t } = useTranslation();
 
   const toggleReducedMotion = () => {
     const newModifiers = modifiers.includes("reduced-motion")
@@ -43,7 +45,7 @@ export function Settings({ onClose, isPaused }: SettingsProps) {
       <MenuBackground />
     <div className="flex flex-col gap-4 bg-gray-800 p-6 rounded-lg shadow-lg max-w-md w-full mx-4">
       <div className="flex justify-between items-center">
-        <div className="text-xl font-bold">Settings</div>
+        <div className="text-xl font-bold">{t("Settings")}</div>
         <button
           onClick={handleContinue}
           className="text-gray-400 hover:text-white"
@@ -54,7 +56,7 @@ export function Settings({ onClose, isPaused }: SettingsProps) {
 
       <div className="flex flex-col gap-4">
         <div className="flex items-center justify-between">
-          <span>Reduced Motion</span>
+          <span>{t("Reduced Motion")}</span>
           <button
             onClick={toggleReducedMotion}
             className={`px-4 py-2 rounded flex items-center justify-center ${
@@ -73,7 +75,7 @@ export function Settings({ onClose, isPaused }: SettingsProps) {
 
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-2">
-            <span>Music Volume</span>
+            <span>{t("Music Volume")}</span>
             <span className="text-sm text-gray-400">
               {volume}%
             </span>
@@ -87,13 +89,13 @@ export function Settings({ onClose, isPaused }: SettingsProps) {
                 onClick={handleContinue}
                 className="w-full px-4 py-2 rounded bg-special-green hover:bg-special-green/90 text-white font-bold"
               >
-                Continue Game
+                {t("Continue Game")}
               </button>
               <button
                 onClick={handleBackToMenu}
                 className="w-full px-4 py-2 rounded bg-gray-700 hover:bg-gray-600 text-white"
               >
-                Back to Main Menu
+                {t("Back to Main Menu")}
               </button>
             </div>
           )}

@@ -1,15 +1,17 @@
 import { useSelector } from "app/store";
 import { MSCounter } from "./ms-counter";
 import { getActivePair, MAX_SCORE } from "./slice";
+import { useTranslation } from "react-i18next";
 
 const ScoreText = () => {
   const { count, gameState, modifiers } = useSelector((x) => x.haystack);
   const activePair = useSelector(state => getActivePair(state.haystack));
+  const { t } = useTranslation();
 
   if (["initial", "finished"].includes(gameState)) return null;
   return count ? (
     <span className="text-xl">
-      Score:{" "}
+      {t("Score_short")}:{" "}
       <span className="text-2xl">
         {count}
         {modifiers.includes("speedrun") ? `/${MAX_SCORE + 1}` : ""}
@@ -17,7 +19,7 @@ const ScoreText = () => {
     </span>
   ) : (
     <span className="text-xl flex items-center">
-      <span>Find</span><img src={activePair?.needle} className="w-6 h-6 ml-2" />
+      <span>{t("Find")}</span><img src={activePair?.needle} className="w-6 h-6 ml-2" />
     </span>
   );
 };

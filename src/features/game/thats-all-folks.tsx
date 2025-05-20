@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from "app/store";
 import { reset, MAX_SCORE, increment, revive } from "./slice";
 import { BiReset } from "react-icons/bi";
 import { MenuBackground } from "../menu/background";
+import { useTranslation } from "react-i18next";
+import { MSCounter } from "./ms-counter";
 
 export const AWESOME_THRESHOLD = 90 * 1000
 
@@ -16,6 +18,8 @@ export const ThatsAllFolks = () => {
     if (gameState !== "finished" && showPoints !== null)
       setTimeout(() => setShowPoints(null), 300);
   }, [gameState, count, showPoints, setShowPoints]);
+  const revives = useSelector((s) => s.haystack.revives);
+  const { t } = useTranslation();
   if (showPoints === null) return null;
   const speedrun = modifiers.includes("speedrun");
   const finished = showPoints >= MAX_SCORE + 1;
@@ -35,34 +39,36 @@ export const ThatsAllFolks = () => {
         >
           <div className="text-center">
             <h1 className="text-3xl font-bold mb-4">
-              {speedrun && finished ? "Speedrun Finished!" : "Game Over!"}
+              {speedrun && finished ? t("Speedrun Finished!") : t("Game Over!")}
             </h1>
-            <div className="text-xl mb-6">
-              You scored <span className="font-bold">{showPoints}</span> point
-              {showPoints !== 1 && "s"}
+            {speedrun && finished ? <div className="text-xl mb-6">
+              <span>{t("Time")}:&nbsp;</span><span className="font-bold"><MSCounter start={start} finish={finish} /></span>
+            </div> : <div className="text-xl mb-6">
+              <span>{t("Score")}:&nbsp;</span><span className="font-bold">{showPoints}</span>
             </div>
+            }
           </div>
 
           <div className="border-t border-gray-700 -mx-6 my-4"></div>
-      {!modifiers.includes("speedrun") ? <button
+        {!speedrun && revives > 0 ? <button
             className="w-full px-4 py-3 rounded bg-special-green hover:bg-special-green/90 text-white text-lg font-bold transform transition-transform hover:scale-105 flex items-center justify-center gap-2"
             onClick={() => dispatch(revive())}
           >
             <img src="emoji/emoji_u1f3ac.svg" className="w-6 h-6" />
-            Revive for an ad
+            {t("Revive for an ad")} ({revives})
           </button> : <></>}
           <button
             className="mt-4 w-full px-4 py-3 rounded rounded bg-gray-700 hover:bg-gray-600 text-white text-lg font-bold transform transition-transform hover:scale-105 flex items-center justify-center gap-2"
             onClick={() => dispatch(reset())}
           >
-            To the menu
+            {t("To the menu")}
           </button>
 <button
             className="mt-4 w-full px-4 py-3 rounded bg-gray-700 hover:bg-gray-600 text-white text-lg font-bold transform transition-transform hover:scale-105 flex items-center justify-center gap-2"
             onClick={() => {dispatch(reset()); dispatch(increment()); }}
           >
             <BiReset className="w-6 h-6" />
-            Try again
+            {t("Try again")}
           </button>
         </div>
       </div>
