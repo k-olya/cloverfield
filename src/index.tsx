@@ -43,7 +43,8 @@ if (window.YaGames) {
       })
   });
 } else {
-      initI18n("ru").then(() => {
+  const sp = new URL(window.location.href).searchParams;
+      initI18n(sp.get("lng") ?? sp.get("lang") ?? "ru").then(() => {
   root.render(
     <React.StrictMode>
       <I18nextProvider i18n={i18n}>
