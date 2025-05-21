@@ -34,7 +34,7 @@ export const ThatsAllFolks = () => {
               // @ts-ignore
               .then(lb => {
                 // @ts-ignore
-                lb.setLeaderboardScore('highscore', Math.ceil(showPoints * activePair.difficulty));
+                lb.setLeaderboardScore('highscore', Math.ceil(showPoints * activePair.difficulty), `${Math.round(activePair.difficulty * 100)}%`);
               });
           }
         });
@@ -71,7 +71,7 @@ export const ThatsAllFolks = () => {
               <span>{t("Score")}:&nbsp;</span><span className="font-bold">{showPoints}</span>
             </div>
               <div className="text-xl mb-6">
-                <span>{t("Adjusted for difficulty")}:&nbsp;</span><span className="font-bold">{Math.ceil(showPoints * activePair.difficulty)}</span><span className="opacity-75">({activePair.difficulty * 100}%)</span>
+                <span>{t("Adjusted for difficulty")}:&nbsp;</span><span className="font-bold">{Math.ceil(showPoints * activePair.difficulty)}</span><span className="opacity-75">({Math.round(activePair.difficulty * 100)}%)</span>
               </div>
             </>
             }
