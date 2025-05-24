@@ -35,7 +35,7 @@ export function Menu() {
   return (
     <>
       <MenuBackground /><div className="h-[100dvh] max-h-[100dvh] flex flex-col justify-center items-center pt-[40px] pb-[24px] w-full mx-4">
-      <div className="flex flex-col bg-gray-800 rounded-lg shadow-lg max-w-md w-full h-full max-h-[100dvh] md:max-h-[70vh] md:mt-0">
+      <div className="flex flex-col bg-gray-800 rounded-lg shadow-lg max-w-md w-full h-full max-h-calc md:max-h-[70vh] md:mt-0">
         <div className="p-3 pb-0">
           <h1 className="text-3xl font-bold text-center mb-4">{t("Find emoji")}</h1>
         </div>
