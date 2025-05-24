@@ -87,3 +87,7 @@ code {
     animation: none;
   }
 }
+
+.max-h-calc {
+  max-height: calc(100dvh - 40px);
+}
