@@ -38,7 +38,7 @@ export function Haystack() {
 
   const handleNeedleClick = () => {
     // Calculate gold reward based on grid width and difficulty
-    const goldReward = Math.ceil((w - 1) * Math.pow(activePair.difficulty, 1) * 2);
+    const goldReward = Math.ceil((w - 1) * Math.pow(activePair.difficulty, 1) * 5);
     dispatch(addGold(goldReward));
     dispatch(increment());
   };

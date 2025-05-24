@@ -57,10 +57,10 @@ export function SettingsPanel({ children }: SettingsPanelProps) {
   return (
     <>
       { ["playing", "paused", "initial"].includes(gameState) ? <div className="fixed top-0 left-0 right-0 w-full px-2 flex items-center justify-between">
-        <div className="scale-75 origin-left">
+        <div className="origin-left">
           <Score />
         </div>
-        <div className="flex gap-1.5 items-center">
+        <div className="flex gap-1.5 items-center py-2">
           <div className="h-6 px-2 flex items-center gap-1 rounded bg-gray-800/80">
             <img 
               src="emoji/emoji_u1fa99.svg" 

@@ -10,16 +10,16 @@ const ScoreText = () => {
 
   if (["initial", "finished"].includes(gameState)) return null;
   return count ? (
-    <span className="text-xl">
+    <span className="">
       {t("Score_short")}:{" "}
-      <span className="text-2xl">
+      <span className="">
         {count}
         {modifiers.includes("speedrun") ? `/${MAX_SCORE + 1}` : ""}
       </span>
     </span>
   ) : (
-    <span className="text-xl flex items-center">
-      <span>{t("Find")}</span><img src={activePair?.needle} className="w-6 h-6 ml-2" />
+    <span className="flex items-center">
+      <span>{t("Find")}</span><img src={activePair?.needle} className="w-6 h-6 ml-1" />
     </span>
   );
 };
@@ -31,10 +31,9 @@ const TimeText = () => {
 };
 
 export const Score = () => (
-  <div className="text-2xl flex justify-between items-center mt-2 portrait:mb-2 mx-4 w-full">
-    &nbsp;
+  <div className="flex justify-between items-baseline mt-2 portrait:mb-2 w-full text-sm">
     <ScoreText />
-    <TimeText />
     &nbsp;
+    <TimeText />
   </div>
 );

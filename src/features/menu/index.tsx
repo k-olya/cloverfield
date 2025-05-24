@@ -34,19 +34,19 @@ export function Menu() {
 
   return (
     <>
-      <MenuBackground /><div className="h-[100dvh] max-h-[100dvh] flex flex-col justify-center items-center pt-[48px] pb-[24px] w-full mx-4">
+      <MenuBackground /><div className="h-[100dvh] max-h-[100dvh] flex flex-col justify-center items-center pt-[40px] pb-[24px] w-full mx-4">
       <div className="flex flex-col bg-gray-800 rounded-lg shadow-lg max-w-md w-full h-full max-h-[100dvh] md:max-h-[70vh] md:mt-0">
-        <div className="p-6 pb-0">
+        <div className="p-3 pb-0">
           <h1 className="text-3xl font-bold text-center mb-4">{t("Find emoji")}</h1>
         </div>
 
         <EmojiPairSelector />
 
-        <div className="relative px-6 pb-6 bg-gray-800 rounded-b-lg">
+        <div className="relative px-2 pb-2 bg-gray-800 rounded-b-lg">
           <div className="h-10 absolute -top-10 left-0 right-0 bg-gradient-to-t from-gray-800 to-gray-800/0 pointer-events-none"></div>
-          <div className="border-t border-gray-700 -mx-6 mb-6"></div>
+          <div className="border-t border-gray-700 -mx-2 mb-2"></div>
           <div className="text-base font-medium mb-2">{t("Game Modifiers")}</div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 text-sm">
             <button
               onClick={() => toggleModifier("speedrun")}
               className={`flex-1 px-4 py-2 rounded flex items-center justify-center gap-2 ${
@@ -74,7 +74,7 @@ export function Menu() {
           <button
             onClick={handleMainButtonClick}
             disabled={!isPurchased && !canAfford}
-            className={`mt-4 w-full px-4 py-3 rounded text-lg font-bold transform transition-transform hover:scale-105 flex items-center justify-center gap-2 ${
+            className={`mt-2 w-full px-4 py-2 rounded text-lg font-bold transform transition-transform hover:scale-105 flex items-center justify-center gap-2 ${
               isPurchased
                 ? "bg-special-green hover:bg-special-green/90 text-white"
                 : canAfford

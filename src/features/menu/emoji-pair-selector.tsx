@@ -13,7 +13,7 @@ export function EmojiPairSelector() {
 
   return (<>
     <OverlayScrollbarsComponent
-      className="flex-1 p-6 pt-4"
+      className="flex-1 p-2 sm:p-6 pt-2 sm:pt-2"
       options={{
         scrollbars: {
           visibility: "auto",

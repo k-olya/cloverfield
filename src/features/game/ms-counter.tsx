@@ -8,7 +8,7 @@ interface Props {
   finish?: number | null;
 }
 
-const DATE_FORMAT = "H:mm:ss.SSS";
+const DATE_FORMAT = "mm:ss.SSS";
 
 dayjs.extend(utc);
 
@@ -27,5 +27,5 @@ export const MSCounter: FC<Props> = ({ start, finish }) => {
     }
   }, 8);
 
-  return <span ref={ref}></span>;
+  return <span className="font-mono" ref={ref}></span>;
 };
