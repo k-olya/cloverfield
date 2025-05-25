@@ -13,7 +13,7 @@ export function EmojiPairSelector() {
 
   return (<>
     <OverlayScrollbarsComponent
-      className="flex-1 p-2 sm:p-6 pt-2 sm:pt-2"
+      className="flex-1 p-2 sm:p-6 pt-0 sm:pt-2"
       options={{
         scrollbars: {
           visibility: "auto",
@@ -25,7 +25,7 @@ export function EmojiPairSelector() {
         }
       }}
     >
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-3">
         {levels.map((levelSet) => (
           <div key={levelSet.name}>
             <div className="text-xl font-bold mb-2">{t(levelSet.name)}</div>
@@ -74,4 +74,4 @@ export function EmojiPairSelector() {
       </div>
     </OverlayScrollbarsComponent>
   </>);
-} 
+}
