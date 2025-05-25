@@ -6,8 +6,8 @@ import { useEffect } from 'react';
  */
 export const DisableContextMenu = () => {
   useEffect(() => {
-    const handleContextMenu = (event: MouseEvent) => {
-      event.preventDefault();
+    const handleContextMenu = (e: MouseEvent) => {
+      e.preventDefault();
     };
 
     // Add the event listener when the component mounts

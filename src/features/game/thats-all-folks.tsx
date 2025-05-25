@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import c from "classnames";
 import { useSelector, useDispatch } from "app/store";
 import { reset, MAX_SCORE, increment, revive, getActivePair, toMenu } from "./slice";
@@ -6,14 +6,17 @@ import { BiReset } from "react-icons/bi";
 import { MenuBackground } from "../menu/background";
 import { useTranslation } from "react-i18next";
 import { MSCounter } from "./ms-counter";
+import { muteAudio, unmuteAudio } from "features/audio/slice";
 
 export const AWESOME_THRESHOLD = 90 * 1000
 
 export const ThatsAllFolks = () => {
   const dispatch = useDispatch();
   const { gameState, count, modifiers, finish, start, toMenuClicks } = useSelector((s) => s.haystack);
+  const { muted } = useSelector((s) => s.audio);
   const activePair = useSelector(state => getActivePair(state.haystack));
   const [showPoints, setShowPoints] = useState<number | null>(null);
+  const mutedRef = useRef(false);
   useEffect(() => {
     if (gameState === "finished" && showPoints === null) setShowPoints(count);
     if (gameState !== "finished" && showPoints !== null)
@@ -84,6 +87,10 @@ export const ThatsAllFolks = () => {
               // revive the player if they watch an ad
               // @ts-ignore
               if (window.ysdk) {
+                mutedRef.current = muted;
+                if (!muted) {
+                  dispatch(muteAudio());
+                }
                 // @ts-ignore
                 window.ysdk.adv.showRewardedVideo({
                   callbacks: {
@@ -96,6 +103,7 @@ export const ThatsAllFolks = () => {
                     },
                     onClose: () => {
                       console.log('Video ad closed.');
+                      if (!mutedRef.current) dispatch(unmuteAudio());
                     },
                     onError: (e: any) => {
                       console.log('Error while open video ad:', e);
@@ -118,8 +126,14 @@ export const ThatsAllFolks = () => {
               // show ad every 3 end-game clicks
               // @ts-ignore
               if (window.ysdk && ((toMenuClicks % 3) === 2)) {
+                mutedRef.current = muted;
+                if (!muted) { 
+                  dispatch(muteAudio());
+                }
                 // @ts-ignore
-                window.ysdk.adv.showFullscreenAdv({ callbacks: {} });
+                window.ysdk.adv.showFullscreenAdv({ callbacks: { onError: () => {console.log("Error showing ad")}, onClose: () => {
+                  if (!mutedRef.current) dispatch(unmuteAudio());
+                } } });
               }
             }}
           >
