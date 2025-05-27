@@ -31,7 +31,7 @@ const TimeText = () => {
 };
 
 export const Score = () => (
-  <div className="flex justify-between items-baseline mt-2 portrait:mb-2 w-full text-sm">
+  <div className="flex justify-between items-baseline portrait:my-2 w-full text-sm">
     <ScoreText />
     &nbsp;
     <TimeText />
